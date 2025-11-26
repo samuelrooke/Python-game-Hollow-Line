@@ -1,0 +1,79 @@
+{
+    "entrance_shaft": {
+        "name": "Entrance Shaft",
+        "description": "Cold metal walls and a ladder far above.",
+        "exits": {
+            "east": "old_platform"
+        },
+        "item": null
+    },
+
+    "old_platform": {
+        "name": "Old Platform",
+        "description": "Cracked tiles and a rusted locker.",
+        "exits": {
+            "west": "entrance_shaft",
+            "east": "service_tunnel"
+        },
+        "item": "lantern"
+    },
+
+    "old_platform": {
+        "name": "Old Platform",
+        "description": "Cracked tiles and a rusted locker.",
+        "exits": {
+            "west": "entrance_shaft",
+            "east": "service_tunnel"
+        },
+        "item": "lantern"
+    },
+
+    "old_platform": {
+        "name": "Old Platform",
+        "description": "Cracked tiles and a rusted locker.",
+        "exits": {
+            "west": "entrance_shaft",
+            "east": "service_tunnel"
+        },
+        "item": "lantern"
+    },
+    "old_platform": {
+        "name": "Old Platform",
+        "description": "Cracked tiles and a rusted locker.",
+        "exits": {
+            "west": "entrance_shaft",
+            "east": "service_tunnel"
+        },
+        "item": "lantern"
+    },
+    "old_platform": {
+        "name": "Old Platform",
+        "description": "Cracked tiles and a rusted locker.",
+        "exits": {
+            "west": "entrance_shaft",
+            "east": "service_tunnel"
+        },
+        "item": "lantern"
+    },
+    "old_platform": {
+        "name": "Old Platform",
+        "description": "Cracked tiles and a rusted locker.",
+        "exits": {
+            "west": "entrance_shaft",
+            "east": "service_tunnel"
+        },
+        "item": "lantern"
+    },
+    "old_platform": {
+        "name": "Old Platform",
+        "description": "Cracked tiles and a rusted locker.",
+        "exits": {
+            "west": "entrance_shaft",
+            "east": "service_tunnel"
+        },
+        "item": "lantern"
+    },
+    
+
+    
+}
