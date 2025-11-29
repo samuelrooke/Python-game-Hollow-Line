@@ -5,7 +5,7 @@
         "exits": {
             "east": "old_platform"
         },
-        "item": null
+        "item": "moukku"
     },
 
     "old_platform": {
@@ -16,64 +16,6 @@
             "east": "service_tunnel"
         },
         "item": "lantern"
-    },
-
-    "old_platform": {
-        "name": "Old Platform",
-        "description": "Cracked tiles and a rusted locker.",
-        "exits": {
-            "west": "entrance_shaft",
-            "east": "service_tunnel"
-        },
-        "item": "lantern"
-    },
-
-    "old_platform": {
-        "name": "Old Platform",
-        "description": "Cracked tiles and a rusted locker.",
-        "exits": {
-            "west": "entrance_shaft",
-            "east": "service_tunnel"
-        },
-        "item": "lantern"
-    },
-    "old_platform": {
-        "name": "Old Platform",
-        "description": "Cracked tiles and a rusted locker.",
-        "exits": {
-            "west": "entrance_shaft",
-            "east": "service_tunnel"
-        },
-        "item": "lantern"
-    },
-    "old_platform": {
-        "name": "Old Platform",
-        "description": "Cracked tiles and a rusted locker.",
-        "exits": {
-            "west": "entrance_shaft",
-            "east": "service_tunnel"
-        },
-        "item": "lantern"
-    },
-    "old_platform": {
-        "name": "Old Platform",
-        "description": "Cracked tiles and a rusted locker.",
-        "exits": {
-            "west": "entrance_shaft",
-            "east": "service_tunnel"
-        },
-        "item": "lantern"
-    },
-    "old_platform": {
-        "name": "Old Platform",
-        "description": "Cracked tiles and a rusted locker.",
-        "exits": {
-            "west": "entrance_shaft",
-            "east": "service_tunnel"
-        },
-        "item": "lantern"
-    },
-    
-
+    }
     
 }
