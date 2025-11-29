@@ -16,6 +16,188 @@
             "east": "service_tunnel"
         },
         "item": "lantern"
+    },
+
+    "service_tunnel": {
+        "name": "Service Tunnel",
+        "description": "Pipes run along the ceiling with a faint hum.",
+        "exits": {
+            "west": "old_platform",
+            "east": "junction_room",
+            "south": "side_passage"
+        },
+        "item": null
+    },
+
+    "side_passage": {
+        "name": "Side Passage",
+        "description": "A narrow path with damp stone and dripping water.",
+        "exits": {
+            "north": "service_tunnel",
+            "south": "broken_step"
+        },
+        "item": null
+    },
+
+    "broken_step": {
+        "name": "Broken Step",
+        "description": "Half collapsed stairs leading deeper down.",
+        "exits": {
+            "north": "side_passage",
+            "south": "drain_corridor"
+        },
+        "item": "rope"
+    },
+
+    "drain_corridor": {
+        "name": "Drain Corridor",
+        "description": "Rusty grates and a low trickle of filthy water.",
+        "exits": {
+            "north": "broken_step",
+            "east": "filter_room"
+        },
+        "item": null
+    },
+
+    "filter_room": {
+        "name": "Filter Room",
+        "description": "Old machines stand still with dust layered thick.",
+        "exits": {
+            "west": "drain_corridor",
+            "east": "pump_station"
+        },
+        "item": "filter_key"
+    },
+
+    "pump_station": {
+        "name": "Pump Station",
+        "description": "Large pumps sit quiet, each coated in soot.",
+        "exits": {
+            "west": "filter_room",
+            "south": "maintenance_hall"
+        },
+        "item": null
+    },
+
+    "maintenance_hall": {
+        "name": "Maintenance Hall",
+        "description": "Long hall with open panels and scattered tools.",
+        "exits": {
+            "north": "pump_station",
+            "south": "storage_bay",
+            "east": "junction_room"
+        },
+        "item": "wrench"
+    },
+
+    "junction_room": {
+        "name": "Junction Room",
+        "description": "Four corridors meet here with faded markings.",
+        "exits": {
+            "west": "service_tunnel",
+            "east": "signal_hub",
+            "south": "maintenance_hall",
+            "north": "deep_track"
+        },
+        "item": null
+    },
+
+    "deep_track": {
+        "name": "Deep Track",
+        "description": "An unused train track vanishes into darkness.",
+        "exits": {
+            "south": "junction_room",
+            "north": "rail_pit"
+        },
+        "item": "flare"
+    },
+
+    "rail_pit": {
+        "name": "Rail Pit",
+        "description": "Loose stones and a drop in the middle of the floor.",
+        "exits": {
+            "south": "deep_track",
+            "north": "signal_archive"
+        },
+        "item": null
+    },
+
+    "signal_archive": {
+        "name": "Signal Archive",
+        "description": "Shelves full of faded papers and cracked binders.",
+        "exits": {
+            "south": "rail_pit",
+            "east": "breaker_room"
+        },
+        "item": "old_card"
+    },
+
+    "breaker_room": {
+        "name": "Breaker Room",
+        "description": "Switchboards line the walls with chipped labels.",
+        "exits": {
+            "west": "signal_archive",
+            "east": "lower_pass"
+        },
+        "item": null
+    },
+
+    "lower_pass": {
+        "name": "Lower Pass",
+        "description": "A cold passage with dust floating in thin beams of light.",
+        "exits": {
+            "west": "breaker_room",
+            "east": "echo_hall"
+        },
+        "item": null
+    },
+
+    "echo_hall": {
+        "name": "Echo Hall",
+        "description": "Every small step repeats itself again and again.",
+        "exits": {
+            "west": "lower_pass",
+            "north": "cold_store"
+        },
+        "item": null
+    },
+
+    "cold_store": {
+        "name": "Cold Store",
+        "description": "Air feels sharper, as if something watches from corners.",
+        "exits": {
+            "south": "echo_hall",
+            "east": "cable_channel"
+        },
+        "item": "chip"
+    },
+
+    "cable_channel": {
+        "name": "Cable Channel",
+        "description": "Thick bundled cables snake along the walls.",
+        "exits": {
+            "west": "cold_store",
+            "north": "inspection_walk"
+        },
+        "item": null
+    },
+
+    "inspection_walk": {
+        "name": "Inspection Walk",
+        "description": "Metal grates clatter underfoot with each step.",
+        "exits": {
+            "south": "cable_channel",
+            "east": "rust_gate"
+        },
+        "item": null
+    },
+
+    "rust_gate": {
+        "name": "Rust Gate",
+        "description": "A tall gate sealed with time and flakes of red metal.",
+        "exits": {
+            "west": "inspection_walk"
+        },
+        "item": "strange_key"
     }
-    
 }
