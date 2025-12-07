@@ -37,11 +37,11 @@ Welcome to Hollow Line.
 
 Commands you can use:
     go east / west / north / south
-    get itemname
-    use flare
-    search
-    read
-    look
+    get itemname -- TAKE ITEMS
+    use flare -- USE ITEM
+    search -- SEARCH FOR USEFUL ITEMS
+    read -- DESCRIPTION OF ROOM
+    look -- REPEAT ROOM
     inventory
     quit
 
@@ -275,6 +275,7 @@ def main():
             print("A hidden service passage opens that climbs for a long time.")
             print("Many steps later you reach an empty control tower that still looks out on the city.")
             print("You leave the metro behind.")
+            print("YOU WON")
             break
 
 
