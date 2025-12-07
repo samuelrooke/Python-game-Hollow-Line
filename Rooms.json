@@ -5,7 +5,8 @@
         "exits": {
             "east": "old_platform"
         },
-        "item": "moukku"
+        "item": "paper",
+        "notes": "A note scratched into the metal: Do not trust the silence below."
     },
 
     "old_platform": {
@@ -15,7 +16,10 @@
             "west": "entrance_shaft",
             "east": "service_tunnel"
         },
-        "item": "lantern"
+        "item": "lantern",
+        "secret": "One tile near the locker rocks slightly when you press your boot on it.",
+        "hidden_item": "battery",
+        "notes": "Faded chalk near the edge marks a circle and a simple arrow pointing down the line."
     },
 
     "service_tunnel": {
@@ -26,7 +30,8 @@
             "east": "junction_room",
             "south": "side_passage"
         },
-        "item": null
+        "item": null,
+        "notes": "Someone wrote on a pipe in marker: If you see it, do not freeze. Light drives it away."
     },
 
     "side_passage": {
@@ -36,7 +41,8 @@
             "north": "service_tunnel",
             "south": "broken_step"
         },
-        "item": null
+        "item": null,
+        "notes": "Rust flakes scatter over old boot prints that lead deeper, then vanish."
     },
 
     "broken_step": {
@@ -46,7 +52,9 @@
             "north": "side_passage",
             "south": "drain_corridor"
         },
-        "item": "rope"
+        "item": "rope",
+        "one_way": ["south"],
+        "notes": "A scrap of yellow tape hangs from the railing with the words DO NOT DESCEND barely visible."
     },
 
     "drain_corridor": {
@@ -56,7 +64,8 @@
             "north": "broken_step",
             "east": "filter_room"
         },
-        "item": null
+        "item": null,
+        "notes": "Old maintenance logs mention strange echoes reported here during night shifts."
     },
 
     "filter_room": {
@@ -66,7 +75,8 @@
             "west": "drain_corridor",
             "east": "pump_station"
         },
-        "item": "filter_key"
+        "item": "filter_key",
+        "notes": "A tag on a console reads: Track 6 anomaly logged, no fault found."
     },
 
     "pump_station": {
@@ -76,7 +86,8 @@
             "west": "filter_room",
             "south": "maintenance_hall"
         },
-        "item": null
+        "item": null,
+        "notes": "Tools lie where they were dropped, as if work ended mid task and never resumed."
     },
 
     "maintenance_hall": {
@@ -87,7 +98,20 @@
             "south": "storage_bay",
             "east": "junction_room"
         },
-        "item": "wrench"
+        "item": "wrench",
+        "secret": "Behind a loose access panel, something heavy rests against the wall.",
+        "hidden_item": "blowtorch",
+        "notes": "A painted symbol of an eye has been scratched over many times near one open panel."
+    },
+
+    "storage_bay": {
+        "name": "Storage Bay",
+        "description": "Dusty shelves and empty crates line the walls.",
+        "exits": {
+            "north": "maintenance_hall"
+        },
+        "item": null,
+        "notes": "Stenciled letters on a crate read: EMERGENCY SUPPLY, but it is long since emptied."
     },
 
     "junction_room": {
@@ -95,11 +119,12 @@
         "description": "Four corridors meet here with faded markings.",
         "exits": {
             "west": "service_tunnel",
-            "east": "signal_hub",
+            "east": "breaker_room",
             "south": "maintenance_hall",
             "north": "deep_track"
         },
-        "item": null
+        "item": null,
+        "notes": "On the wall, someone has drawn a rough map of tracks and a single circle marked with a question mark."
     },
 
     "deep_track": {
@@ -109,7 +134,8 @@
             "south": "junction_room",
             "north": "rail_pit"
         },
-        "item": "flare"
+        "item": "flare",
+        "notes": "An old emergency flare case lies open here, one tube still intact inside."
     },
 
     "rail_pit": {
@@ -119,7 +145,8 @@
             "south": "deep_track",
             "north": "signal_archive"
         },
-        "item": null
+        "item": null,
+        "notes": "A note scratched into stone: It waits near the rails. Light makes it turn away."
     },
 
     "signal_archive": {
@@ -129,7 +156,8 @@
             "south": "rail_pit",
             "east": "breaker_room"
         },
-        "item": "old_card"
+        "item": "old_card",
+        "notes": "Log entry: Repeated reports of a tall figure seen at the edge of lamplight along the outer track."
     },
 
     "breaker_room": {
@@ -139,7 +167,8 @@
             "west": "signal_archive",
             "east": "lower_pass"
         },
-        "item": null
+        "item": null,
+        "notes": "Several switches are locked in the OFF position with wax and twine, as if someone did not trust them to stay down."
     },
 
     "lower_pass": {
@@ -149,7 +178,8 @@
             "west": "breaker_room",
             "east": "echo_hall"
         },
-        "item": null
+        "item": null,
+        "notes": "Breath shows in front of you even when the air should be still."
     },
 
     "echo_hall": {
@@ -159,7 +189,8 @@
             "west": "lower_pass",
             "north": "cold_store"
         },
-        "item": null
+        "item": null,
+        "notes": "Someone tried to cover their tracks here, but the dust remembers where they went."
     },
 
     "cold_store": {
@@ -169,7 +200,8 @@
             "south": "echo_hall",
             "east": "cable_channel"
         },
-        "item": "chip"
+        "item": "chip",
+        "notes": "A small data chip sits on a metal tray, tagged only with a code and the word anomaly."
     },
 
     "cable_channel": {
@@ -179,7 +211,8 @@
             "west": "cold_store",
             "north": "inspection_walk"
         },
-        "item": null
+        "item": null,
+        "notes": "Several cables have been cut and tied off, as if someone wanted less power down here, not more."
     },
 
     "inspection_walk": {
@@ -189,7 +222,8 @@
             "south": "cable_channel",
             "east": "rust_gate"
         },
-        "item": null
+        "item": null,
+        "notes": "The grating bears deep marks, as if something heavy was dragged toward the gate many times."
     },
 
     "rust_gate": {
@@ -198,6 +232,7 @@
         "exits": {
             "west": "inspection_walk"
         },
-        "item": "strange_key"
+        "item": "strange_key",
+        "notes": "A strange key rests near the base of the gate, cold to the touch. The metal around the lock shows signs of heat and force from long ago."
     }
 }
