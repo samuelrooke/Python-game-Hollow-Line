@@ -1,238 +1,240 @@
 {
-    "entrance_shaft": {
-        "name": "Entrance Shaft",
-        "description": "Cold metal walls and a ladder far above.",
+    "sisaantulokaytava": {
+        "name": "Sisääntulokäytävä",
+        "description": "Heräät kylmän metalliseinän varassa. Akseli kohoaa korkeuksiin, kadoten pimeään, josta valuu alas kylmää ilmaa kuin varoituksena. Yläpuolella olevat tikkaat ovat ruostuneet poikki ja niiden jäänteet roikkuvat vinossa kuin katkenneet kylkiluut. Jaloissasi on ohut kerros mustaa pölyä, joka tuntuu liikahtaneen vasta hetki sitten - aivan kuin joku olisi juuri poistunut paikalta.",
         "exits": {
-            "east": "old_platform"
+            "itä": "vanha_laituri"
         },
-        "item": "paper",
-        "notes": "A note scratched into the metal: Do not trust the silence below."
+        "item": "paperi",
+        "notes": "Metalliin kaiverrettu viesti: \"Hiljaisuus ei ole tyhjyyttä. Se on varoitus.\""
     },
 
-    "old_platform": {
-        "name": "Old Platform",
-        "description": "Cracked tiles and a rusted locker.",
+    "vanha_laituri": {
+        "name": "Vanha laituri",
+        "description": "Saavut hylätylle laiturille, jonka laatat ovat halkeilleet paineesta ja iästä. Raiteet puuttuvat kokonaan, kuin ne olisi purettu kiireessä. Seinän vieressä lepää ruostunut lokero, jonka ovi on vääntynyt auki. Tunnelin suuntaan johtava käytävä hohkaa kylmää vetoa.",
         "exits": {
-            "west": "entrance_shaft",
-            "east": "service_tunnel"
+            "länsi": "sisaantulokaytava",
+            "itä": "huoltotunneli"
         },
-        "item": "lantern",
-        "secret": "One tile near the locker rocks slightly when you press your boot on it.",
-        "hidden_item": "battery",
-        "notes": "Faded chalk near the edge marks a circle and a simple arrow pointing down the line."
+        "item": "lyhty",
+        "secret": "Eräs laatta nitkahtaa jalan alla ja paljastaa onttoa tilaa sen alla.",
+        "hidden_item": "paristo",
+        "notes": "Seinälle piirretty liidulla: ympyrä, jonka sisällä risti, ja sen vieressä nuoli syvemmälle."
     },
 
-    "service_tunnel": {
-        "name": "Service Tunnel",
-        "description": "Pipes run along the ceiling with a faint hum.",
+    "huoltotunneli": {
+        "name": "Huoltotunneli",
+        "description": "Tämä pitkä, matala tunneli on täynnä putkia ja johdoiksi muuttuneita varjoja. Katossa kulkevat metalliputket värähtelevät hiljaa, kuin jokin liikkuisi niiden sisällä. Valosi paljastaa vanhoja huoltomerkintöjä ja tummia läiskiä, joita ei tee mieli tutkia tarkemmin. Kaukana etelän suunnassa humisee tasainen, uhkaava ääni.",
         "exits": {
-            "west": "old_platform",
-            "east": "junction_room",
-            "south": "side_passage"
+            "länsi": "vanha_laituri",
+            "itä": "tunneliristeys",
+            "etelä": "sivukaytava"
         },
         "item": null,
-        "notes": "Someone wrote on a pipe in marker: If you see it, do not freeze. Light drives it away."
+        "notes": "Putkeen on kirjoitettu tussilla: \"Jos näet sen: älä pysähdy. Valo kääntää sen pois.\""
     },
 
-    "side_passage": {
-        "name": "Side Passage",
-        "description": "A narrow path with damp stone and dripping water.",
+    "sivukaytava": {
+        "name": "Sivukäytävä",
+        "description": "Kapea, kostea käytävä, jonka seinät tihkuvat vettä. Lattialla näkyy vanhoja jalanjälkiä, jotka vaikuttavat kuuluneen yhdelle henkilölle - mutta ne päättyvät keskelle käytävää. Tummat vesipisarat laskeutuvat säännöllisin välein, ja jokainen tippa kaikuu yllättävän kovaa, aivan kuin joku kuuntelisi.",
         "exits": {
-            "north": "service_tunnel",
-            "south": "broken_step"
+            "pohjoinen": "huoltotunneli",
+            "etelä": "sortunut_portaikko"
         },
         "item": null,
-        "notes": "Rust flakes scatter over old boot prints that lead deeper, then vanish."
+        "notes": "Ruosteiset hiukkaset ovat kerääntyneet yhteen kohtaan, kuin jonkin painavan esineen alla."
     },
 
-    "broken_step": {
-        "name": "Broken Step",
-        "description": "Half collapsed stairs leading deeper down.",
+    "sortunut_portaikko": {
+        "name": "Sortunut portaikko",
+        "description": "Portaikko, joka on murtunut painonsa alla ja jatkuu arvaamattomaan syvyyteen. Joka kolmas askel on romahtanut pois paikoiltaan, jättäen väliin vaarallisia aukkoja. Ilma alapuolella on selvästi kylmempää, ja jostakin nousee hidas, rytmikäs tuuli, joka muistuttaa hengitystä.",
         "exits": {
-            "north": "side_passage",
-            "south": "drain_corridor"
+            "pohjoinen": "sivukaytava",
+            "etelä": "viemari"
         },
-        "item": "rope",
-        "one_way": ["south"],
-        "notes": "A scrap of yellow tape hangs from the railing with the words DO NOT DESCEND barely visible."
+        "item": "köysi",
+        "one_way": ["etelä"],
+        "notes": "Kaiteessa roikkuu repeytynyt keltainen teippi: \"EI ALAS. EI JÄLLEEN.\""
     },
 
-    "drain_corridor": {
-        "name": "Drain Corridor",
-        "description": "Rusty grates and a low trickle of filthy water.",
+    "viemari": {
+        "name": "viemäri",
+        "description": "Matalassa tilassa vesi virtaa hitaasti kohti ruostuneita ritilöitä. Ilma on raskas ja tunkkainen, ja jossain syvemmässä tunnissa kaikuu epäsäännöllinen tippa, jonka rytmi on liian epätarkka ollakseen luonnollinen. Seinissä näkyy jälkiä, joita ei ole tehty työkalulla, vaan jollain epäsäännöllisellä ja voimaa omaavalla.",
         "exits": {
-            "north": "broken_step",
-            "east": "filter_room"
-        },
-        "item": null,
-        "notes": "Old maintenance logs mention strange echoes reported here during night shifts."
-    },
-
-    "filter_room": {
-        "name": "Filter Room",
-        "description": "Old machines stand still with dust layered thick.",
-        "exits": {
-            "west": "drain_corridor",
-            "east": "pump_station"
-        },
-        "item": "filter_key",
-        "notes": "A tag on a console reads: Track 6 anomaly logged, no fault found."
-    },
-
-    "pump_station": {
-        "name": "Pump Station",
-        "description": "Large pumps sit quiet, each coated in soot.",
-        "exits": {
-            "west": "filter_room",
-            "south": "maintenance_hall"
+            "pohjoinen": "sortunut_portaikko",
+            "itä": "ilmanvaihtotila"
         },
         "item": null,
-        "notes": "Tools lie where they were dropped, as if work ended mid task and never resumed."
+        "notes": "Huoltoloki 11/-: \"Kaikuva läsnäolo jatkuu. Työntekijät kieltäytyivät yövuoroista.\""
     },
 
-    "maintenance_hall": {
-        "name": "Maintenance Hall",
-        "description": "Long hall with open panels and scattered tools.",
+    "ilmanvaihtotila": {
+        "name": "ilmanvaihtotila",
+        "description": "Vanhat, massiiviset ilmavaihtokoneet seisovat toimettomina. Pölyä on niin paljon, että jokainen askel piirtää siihen syvän jäljen. Seinässä näkyy kapeita, epäsäännöllisiä viiruja, jotka muistuttavat kynsien jälkiä. Ilma tuntuu nihkeältä ja sähköiseltä, kuin jokin näkymätön varaus olisi jäänyt leijailemaan ilmaan.",
         "exits": {
-            "north": "pump_station",
-            "south": "storage_bay",
-            "east": "junction_room"
+            "länsi": "viemari",
+            "itä": "pumppuasema"
         },
-        "item": "wrench",
-        "secret": "Behind a loose access panel, something heavy rests against the wall.",
-        "hidden_item": "blowtorch",
-        "notes": "A painted symbol of an eye has been scratched over many times near one open panel."
+        "item": "suodatinavain",
+        "notes": "Kansio, josta huomaa selkeästi että kaikki muut sivut ovat revitty irti, jäljellä on vian yksi sivu: \"Rata 6 - Poikkeama havaittu. Sähköjärjestelmämme ei löydä vikaa. Jokin liikkuu varjoissa...  \""
     },
 
-    "storage_bay": {
-        "name": "Storage Bay",
-        "description": "Dusty shelves and empty crates line the walls.",
+    "pumppuasema": {
+        "name": "Pumppuasema",
+        "description": "Kymmenet pumput lepäävät hiljaa, kuin olisivat jääneet paikalleen kesken liikkeen. Lattialla lojuaa työkaluja ja avoimia rasioita, aivan kuin työ olisi keskeytynyt yhtäkkiä jonkin äänen vuoksi. Seinän vieressä on suuri pumppu, jonka kyljessä on syvä painauma - kuin siihen olisi nojattu valtavalla voimalla.",
         "exits": {
-            "north": "maintenance_hall"
+            "länsi": "ilmanvaihtotila",
+            "etelä": "huoltohalli"
         },
         "item": null,
-        "notes": "Stenciled letters on a crate read: EMERGENCY SUPPLY, but it is long since emptied."
+        "notes": "Öljyssä näkyvät jalanjäljet ovat epätavallisen pitkiä ja kapeita."
     },
 
-    "junction_room": {
-        "name": "Junction Room",
-        "description": "Four corridors meet here with faded markings.",
+    "huoltohalli": {
+        "name": "Huoltohalli",
+        "description": "Pitkä ja kaiuton tila, jonka seinissä on avoimia johtopaneeleja. Kaukana käytävän päässä näkyy hämärästi kumartunut hahmo - mutta kun liikut, se katoaa, kuin se olisi ollut vain valon muodostama kuvajainen. Lattialla on rikkoutunut työvalo, jonka polttimo on sisältä päin haljennut.",
         "exits": {
-            "west": "service_tunnel",
-            "east": "breaker_room",
-            "south": "maintenance_hall",
-            "north": "deep_track"
+            "pohjoinen": "pumppuasema",
+            "etelä": "varastotila",
+            "itä": "tunneliristeys"
+        },
+        "item": "jakoavain",
+        "secret": "Yhden paneelin takaa kuuluu hiljainen, matala värinä. Se tuntuu ihossa asti.",
+        "hidden_item": "poltin",
+        "notes": "Seinään maalattu silmä-symboli on kauttaaltaan naarmutettu. Ehkä pelosta."
+    },
+
+    "varastotila": {
+        "name": "Varastotila",
+        "description": "Hyllyt seisovat tyhjillään kuin olisivat odottaneet jotakin, mikä ei koskaan saapunut. Laatikoiden sisäpinnoissa näkyy painaumia, kuin jotakin olisi pakattu kiireessä ja revitty irti hetkeä myöhemmin. Ilma on kuiva ja kylmä, ja jokainen henkäys tuntuu jäävän kiinni kurkkuun.",
+        "exits": {
+            "pohjoinen": "huoltohalli"
         },
         "item": null,
-        "notes": "On the wall, someone has drawn a rough map of tracks and a single circle marked with a question mark."
+        "notes": "Laatikon reunassa lukee: \"HÄTÄVARASTO C\" - sisältö on viety pois väkisin."
     },
 
-    "deep_track": {
-        "name": "Deep Track",
-        "description": "An unused train track vanishes into darkness.",
+    "tunneliristeys": {
+        "name": "tunneliristeys",
+        "description": "Neljä käytävää kohtaavat tässä hylätyssä salissa. Seinät kaartuvat hitaasti sisäänpäin, kuin koko tila olisi painunut kasaan ajan myötä. Lattialla näkyy vaaleaa pölyä, johon on piirtynyt ympyränmuotoinen jälki - täydellinen, kuin koneella tehty, mutta liian suuri sellaiseen.",
         "exits": {
-            "south": "junction_room",
-            "north": "rail_pit"
-        },
-        "item": "flare",
-        "notes": "An old emergency flare case lies open here, one tube still intact inside."
-    },
-
-    "rail_pit": {
-        "name": "Rail Pit",
-        "description": "Loose stones and a drop in the middle of the floor.",
-        "exits": {
-            "south": "deep_track",
-            "north": "signal_archive"
+            "länsi": "huoltotunneli",
+            "itä": "katkaisuhuone",
+            "etelä": "huoltohalli",
+            "pohjoinen": "syva_rata"
         },
         "item": null,
-        "notes": "A note scratched into stone: It waits near the rails. Light makes it turn away."
+        "notes": "Seinään piirretty kartta: yksi risteyspiste on ympyröity. Sen vieressä lukee: \"Se pysyy valon reunalla.\""
     },
 
-    "signal_archive": {
-        "name": "Signal Archive",
-        "description": "Shelves full of faded papers and cracked binders.",
+    "syva_rata": {
+        "name": "Syvä rata",
+        "description": "Pitkä, käyttämätön raide ulottuu pimeyteen, kuin se jatkuisi loputtomiin. Ilma raiteilla tuntuu painostavalta ja sähköiseltä, ja jokainen askel saa etäisen kumahduksen kiertämään tunnelin läpi. Sivussa lepää rikkinäinen hätäkotelo, jonka sisältä pilkottaa yksi ehjä soihtu.",
         "exits": {
-            "south": "rail_pit",
-            "east": "breaker_room"
+            "etelä": "tunneliristeys",
+            "pohjoinen": "kiskokuoppa"
         },
-        "item": "old_card",
-        "notes": "Log entry: Repeated reports of a tall figure seen at the edge of lamplight along the outer track."
+        "item": "soihtu",
+        "notes": "Kotelon kannessa: \"KÄYTÄ TARVITTAESSA. SE PELKÄÄ VALOA.\""
     },
 
-    "breaker_room": {
-        "name": "Breaker Room",
-        "description": "Switchboards line the walls with chipped labels.",
+    "kiskokuoppa": {
+        "name": "Kiskokuoppa",
+        "description": "Huone, jossa lattia on luhistunut syvään kuoppaan. Irtonaiset kivet ovat kasaantuneet kuin jokin olisi vetänyt niitä pitkin lattiaa. Ilma kuopassa on jäätävän kylmää ja tuntuu hiipivän jalkoihin. Jostain alta kuuluu metallin hiljainen kierto, kuin jokin liikkuisi painavan koneiston sisällä.",
         "exits": {
-            "west": "signal_archive",
-            "east": "lower_pass"
-        },
-        "item": null,
-        "notes": "Several switches are locked in the OFF position with wax and twine, as if someone did not trust them to stay down."
-    },
-
-    "lower_pass": {
-        "name": "Lower Pass",
-        "description": "A cold passage with dust floating in thin beams of light.",
-        "exits": {
-            "west": "breaker_room",
-            "east": "echo_hall"
+            "etelä": "syva_rata",
+            "pohjoinen": "signaaliarkisto"
         },
         "item": null,
-        "notes": "Breath shows in front of you even when the air should be still."
+        "notes": "Kiveen raaputettu: \"Se odottaa. Se kääntyy valosta pois, mutta ei pysähdy.\""
     },
 
-    "echo_hall": {
-        "name": "Echo Hall",
-        "description": "Every small step repeats itself again and again.",
+    "signaaliarkisto": {
+        "name": "Signaaliarkisto",
+       "description": "Arkisto avautuu pitkänä, kapeana käytävänä, jonka hyllyt notkuvat kosteudesta käpristyneiden papereiden painosta. Ilma on tunkkaista ja raskasta, ja jokaisella askeleella syntyy kaiku, joka ei palaa samaan aikaan kuin ääni lähti - aivan kuin jokin olisi vastannut sinulle takaisin millisekunnin viiveellä. Käytävän perällä on suuri repeämä betonissa, kuin jokin olisi työntynyt seinän läpi sisältäpäin ja jättänyt jälkeensä tilan, jossa valo käyttäytyy oudosti: sen reuna venyy ja hajoaa ennen kuin koskettaa pimeää. Arkistopöytien väliin jätetyissä muistiinpanoissa vilahtaa työntekijöiden kuvauksia hahmosta, joka ilmestyi juuri valon ulkoreunaan, ei koskaan keskelle sitä. Paperien joukossa on rivejä, jotka näyttävät kirjoitetun kiireessä - sanoja raapustettuna hämärässä käsialalla, joka muuttuu sitä sekavammaksi mitä syvemmälle arkistoon kulkee.",
         "exits": {
-            "west": "lower_pass",
-            "north": "cold_store"
+            "etelä": "kiskokuoppa",
+            "itä": "katkaisuhuone"
+        },
+        "item": "vanha_kortti",
+
+    "notes": "Luokiteltu asiakirja Tietoluokitus: Erittäin Salattu - Projektin Kulku / Rata 6 laajennus:\n\n\"Murmanskin kaupungin myöntämän metrolaajennusluvan jälkeen aloimme laajentaa rataverkostoa kaupungin eteläosiin. Rakennusprojektin ensimmäisinä viikkoina havaittiin ilmiöitä, joiden ajateltiin johtuvan geologisista häiriöistä tai mineraaleista, jotka voisivat sekoittaa mittareita ja järjestelmiä.\n\nEmme kuitenkaan löytäneet geologista vikaa. Kivi oli vakaata - mutta tila sen ympärillä ei. Työntekijät raportoivat varjoja, jotka eivät seuranneet valon kulmaa, sekä askeleita, jotka kuuluivat ilman aiheuttajaa. 26.4.1957 Ryhmä B:n psyykkinen tila romahti muutamassa päivässä, ja heidät poistettiin alueelta.\n\n28.4.1957 toinen tiimi teki ensimmäisen selkeän havainnon: äänen, joka muistutti puhetta, mutta ei vastannut mitään ihmisperäistä taajuutta. 30.4.1957 varjoista tiivistyi hahmo, joka muistutti ihmistä vain ääriviivoiltaan - ei liikkeeltään.\n\nSe ei reagoinut ääneen eikä seurannut ketään. Se pysyi valon reunan ulkopuolella, kuin jokin olisi juuttunut kahden tason väliin. Sen ilmestyessä ilma aaltoili ja mittarit ylikuormittuivat.\n\nTutkimusten mukaan ilmiö ei siedä lämpöä. Kun sen reitille suunnattiin lämpölähde, sen rakenne hajosi ja tila palautui normaaliksi. Tämä on ainoa havaittu tapa tuhota se.\n\nHavaintoa kutsutaan 'Drifteriksi', koska se ei kiinnity seiniin, lattiaan tai varjoihin - se ajelehtii.\n\nOhje: jos näet hahmon, älä lähesty. Käytä lämpöä. Lämpö tappaa sen.\""
+
+    },
+
+    "katkaisuhuone": {
+        "name": "Katkaisuhuone",
+        "description": "Huone, jossa kymmenet katkaisijat kattavat seinät. Useat ovat lukittuina alas, ja joissain näkyy syviä palojälkiä. Ilmassa leijuu palaneen muovin haju. Pistorasioista kuuluu matalaa, epätahtista naksuntaa, kuin jokin yrittäisi käynnistyä mutta puuttuisi voimaa.",
+        "exits": {
+            "länsi": "signaaliarkisto",
+            "itä": "alempi_kaytava"
         },
         "item": null,
-        "notes": "Someone tried to cover their tracks here, but the dust remembers where they went."
+        "notes": "Pienellä lapulla: \"Älä koske ylempiin kytkimiin. Ne avaavat sen.\""
     },
 
-    "cold_store": {
-        "name": "Cold Store",
-        "description": "Air feels sharper, as if something watches from corners.",
+    "alempi_kaytava": {
+        "name": "Alempi käytävä", 
+        "description": "Täällä ilma on hyytävää. Valonsäteet osuvat leijuvaan pölyyn ja tekevät huoneesta kuolleen näköisen. Lattian alla tuntuu muodoton tärinä, kuin jokin valtava kulkisi syvällä rakenteiden alla. Yhden ruuvinreiän reunalla näkyy kuivunutta, tummunutta nestettä.",
         "exits": {
-            "south": "echo_hall",
-            "east": "cable_channel"
-        },
-        "item": "chip",
-        "notes": "A small data chip sits on a metal tray, tagged only with a code and the word anomaly."
-    },
-
-    "cable_channel": {
-        "name": "Cable Channel",
-        "description": "Thick bundled cables snake along the walls.",
-        "exits": {
-            "west": "cold_store",
-            "north": "inspection_walk"
+            "länsi": "katkaisuhuone",
+            "itä": "kaikuhalli"
         },
         "item": null,
-        "notes": "Several cables have been cut and tied off, as if someone wanted less power down here, not more."
+        "notes": "Hengityksesi näkyy ilmassa, vaikka lämpötilan ei pitäisi laskea näin alas maan alla."
     },
 
-    "inspection_walk": {
-        "name": "Inspection Walk",
-        "description": "Metal grates clatter underfoot with each step.",
+    "kaikuhalli": {
+        "name": "Kaikuhalli",
+        "description": "Avarampi tila, jossa jokainen liike moninkertaistuu. Askeleesi toistuvat kaukaa seinien kautta, ja välillä kuulet askeleen, jota et itse ottanut. Seinissä näkyy kapeita viiruja, jotka muodostavat kaarevia kuvioita - kuin joku olisi kulkenut sormet pitkin kiveä hämärässä.",
         "exits": {
-            "south": "cable_channel",
-            "east": "rust_gate"
+            "länsi": "alempi_kaytava",
+            "pohjoinen": "kylmavarasto"
         },
         "item": null,
-        "notes": "The grating bears deep marks, as if something heavy was dragged toward the gate many times."
+        "notes": "Pölyn jäljet muodostavat viivan pohjoiseen, suoraan kylmälle alueelle."
     },
 
-    "rust_gate": {
-        "name": "Rust Gate",
-        "description": "A tall gate sealed with time and flakes of red metal.",
+    "kylmavarasto": {
+        "name": "Kylmävarasto",
+        "description": "Ilma muuttuu vielä kylmemmäksi. Huoneessa on metallisia pöytiä ja vanhoja laatikoita, joiden sisällöt ovat hajonneet tai kadonneet. Yhdellä pöydällä makaa pieni metallinen siru, jonka pinta on kylmä kuin jäinen lasi. Huoneen varjot liikkuvat hitaasti, aivan kuin valo heijastuisi jostain, mitä et näe.",
         "exits": {
-            "west": "inspection_walk"
+            "etelä": "kaikuhalli",
+            "itä": "kaapelikanava"
         },
-        "item": "strange_key",
-        "notes": "A strange key rests near the base of the gate, cold to the touch. The metal around the lock shows signs of heat and force from long ago."
+        "item": "siru",
+        "notes": "Lapussa: \"Älä vie tätä valoon. Se näkee.\""
+    },
+
+    "kaapelikanava": {
+        "name": "Kaapelikanava",
+        "description": "Kapeat käytävät täynnä paksuja kaapeleita, jotka kiemurtelevat kuin mustat suonet pitkin seiniä. Jotkin kaapelit ovat katkenneet ja kiedottu varoen sivuun. Lattialla on syviä uria, kuin jokin raskas olisi raahautunut pitkin käytävää. Ilmassa on sähköinen väreily.",
+        "exits": {
+            "länsi": "kylmavarasto",
+            "pohjoinen": "tarkastuskaytava"
+        },
+        "item": null,
+        "notes": "Kaapeleiden välissä näkyy sormenjälkiä, mutta ne ovat liian pitkiä ollakseen ihmisen tekemiä."
+    },
+
+    "tarkastuskaytava": {
+        "name": "Tarkastuskäytävä",
+        "description": "Metalliritilät kolisevat jalkojesi alla ja ääni kulkee pitkälle molempiin suuntiin, herättäen kaiut jotka palaavat hieman väärässä rytmissä. Seinissä kulkee tarkastuskaiteita, joiden pintaan on kaiverrettu syviä, epäsäännöllisiä uurteita. Käytävä kaartuu kevyesti ennen porttia.",
+        "exits": {
+            "etelä": "kaapelikanava",
+            "itä": "ruosteportti"
+        },
+        "item": null,
+        "notes": "Ritilän päällä on himmeä jälki - kuin jokin olisi kulkenut siitä monta kertaa, hitaasti ja painavana."
+    },
+
+    "ruosteportti": {
+        "name": "Ruosteportti",
+        "description": "Korkea portti, jonka pinta on punaisen ruosteen peittämä ja halkeillut paineesta. Se näyttää siltä, kuin sitä olisi lyöty ja poltettu monilla eri välineillä. Portin juurella lepää outo avain, jonka metalli tuntuu jäätä kylmemmältä. Portin takaa kuuluu ajoittain matala humahdus, joka kuulostaa melkein huokaukselta.",
+        "exits": {
+            "länsi": "tarkastuskaytava"
+        },
+        "item": "outo_avain",
+        "notes": "Avain on lämmin toiselta puolelta, kuin sitä olisi pidetty kädessä aivan hiljattain."
     }
 }
