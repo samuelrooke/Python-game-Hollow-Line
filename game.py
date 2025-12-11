@@ -1,6 +1,11 @@
 import json
 import random
 import textwrap  # rivinvaihtojen hallintaan
+# --- VÄRIT ---
+DANGER = "\033[91m"   # punainen
+WARNING = "\033[93m"  # keltainen
+RESET = "\033[0m"
+
 
 # ------------- DATAN LATAUS -------------
 
@@ -16,11 +21,15 @@ drifter_room = "kiskokuoppa"      # Drifterin aloitussijainti (vastaa JSONia)
 flare_active = False
 flare_timer = 0
 
-fear = 0                          # 0–10, kun 10 => hermoromahdus
+fear = 0                          # 0-10, kun 10 => hermoromahdus
 drifter_met_with_flare = False    # vaikuttaa loppukohtaukseen
 
 score = 0                         # pisteet
 visited_rooms = set()             # huoneet, joissa on käyty
+
+danger_distance = 0
+fear_tick = 0
+
 
 # ------------- APUTOIMINTO: RIVINVAIHDOT -------------
 
@@ -34,16 +43,16 @@ def wrap(text):
 # ------------- KÄYTTÖOHJE -------------
 
 def instructions():
-    print(r"""
- ██░ ██  ▒█████   ██▓     ██▓     ▒█████   █     █░    ██▓     ██▓ ███▄    █ ▓█████ 
- ▓██░ ██▒▒██▒  ██▒▓██▒    ▓██▒    ▒██▒  ██▒▓█░ █ ░█░   ▓██▒    ▓██▒ ██ ▀█   █ ▓█   ▀ 
- ▒██▀▀██░▒██░  ██▒▒██░    ▒██░    ▒██░  ██▒▒█░ █ ░█    ▒██░    ▒██▒▓██  ▀█ ██▒▒███   
- ░▓█ ░██ ▒██   ██░▒██░    ▒██░    ▒██   ██░░█░ █ ░█    ▒██░    ░██░▓██▒  ▐▌██▒▒▓█  ▄ 
- ░▓█▒░██▓░ ████▓▒░░██████▒░██████▒░ ████▓▒░░░██▒██▓    ░██████▒░██░▒██░   ▓██░░▒████▒
-  ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░░ ▒░▓  ░░ ▒░▒░▒░ ░ ▓░▒ ▒     ░ ▒░▓  ░░▓  ░ ▒░   ▒ ▒ ░░ ▒░ ░
-  ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░░ ░ ▒  ░  ░ ▒ ▒░   ▒ ░ ░     ░ ░ ▒  ░ ▒ ░░ ░░   ░ ▒░ ░ ░  ░
-  ░  ░░ ░░ ░ ░ ▒    ░ ░     ░ ░   ░ ░ ░ ▒    ░   ░       ░ ░    ▒ ░   ░   ░ ░    ░   
-  ░  ░  ░    ░ ░      ░  ░    ░  ░    ░ ░      ░           ░  ░ ░           ░    ░  ░
+    print("""
+          
+M""MMMMM""MM          dP dP                        M""MMMMMMMM oo                   
+M  MMMMM  MM          88 88                        M  MMMMMMMM                      
+M         `M .d8888b. 88 88 .d8888b. dP  dP  dP    M  MMMMMMMM dP 88d888b. .d8888b. 
+M  MMMMM  MM 88'  `88 88 88 88'  `88 88  88  88    M  MMMMMMMM 88 88'  `88 88ooood8 
+M  MMMMM  MM 88.  .88 88 88 88.  .88 88.88b.88'    M  MMMMMMMM 88 88    88 88.  ... 
+M  MMMMM  MM `88888P' dP dP `88888P' 8888P Y8P     M         M dP dP    dP `88888P' 
+MMMMMMMMMMMM                                       MMMMMMMMMMM                      
+                                                                                    
 """)
     print("""
 Tervetuloa Hollow Lineen.
@@ -93,6 +102,7 @@ def show_room():
 
     item = room.get("item")
     if item:
+        print("----------------")
         print(f"Lattialla on esine: {item}.")
 
     exits = ", ".join(room["exits"].keys())
@@ -121,7 +131,7 @@ def ambient():
 def power_failure():
     global fear
     if random.random() < 0.05:
-        print("Pimeys tuntuu tihenevän ympärilläsi. Selkäpiitäsi karmii.")
+        print("Taskulamppusi lakkaa toimimasta, sinua pelottaa.")
         fear = min(fear + 1, 10)
 
 
@@ -181,15 +191,19 @@ def drifter_encounter():
     else:
         print("Yrität tavoittaa turvaa, jota ei ole enää lähettyvillä.")
         print("Jääkylmä läsnäolo sulkeutuu ympärilläsi ja tunneli nielee sinut.")
-        print(" SINÄ KUOLIT – PELI PÄÄTTYY")
+        print(" SINÄ KUOLIT - PELI PÄÄTTYY")
         print(f"Pisteet: {score}")
         return True
+
+
 
 
 # ------------- PELIN PÄÄKOODI -------------
 
 def main():
     global currentRoom, flare_active, flare_timer, fear, score, visited_rooms
+    global danger_distance, fear_tick
+
 
     # merkitään aloitushuone käydyksi
     visited_rooms.add(currentRoom)
@@ -198,10 +212,69 @@ def main():
     show_room()
     status()
 
-    while True:
+
+
+
+
+
+while True:
+
+        # --- Drifterin etäisyys tarkistus (JOKA VUOROLLA) ---
+        player_exits = rooms[currentRoom]["exits"].values()
+
+        if drifter_room == currentRoom:
+            danger_distance = 2
+        elif drifter_room in player_exits:
+            danger_distance = 1
+        else:
+            danger_distance = 0
+
+        # Viereinen huone → varoitus + pelkoa
+        if danger_distance == 1:
+            print(WARNING + "Kylmä väre käy pitkin selkääsi – jokin on aivan seinän takana..." + RESET)
+            if not flare_active:
+                fear_tick += 1
+                if fear_tick >= 3:
+                    fear = min(fear + 1, 10)
+                    fear_tick = 0
+
+        # Sama huone → yksi vuoro aikaa
+        if danger_distance == 2 and not flare_active:
+            print(DANGER + "Pimeys paksuuntuu ympärilläsi. Drifter on HUONEESSA!" + RESET)
+            print(WARNING + "Sinulla on YKSI vuoro aikaa karata tai käyttää soihtua!" + RESET)
+
+            user = input("> ").strip().lower()
+
+            if user == "käytä soihtu" and "soihtu" in inventory:
+                flare_active = True
+                flare_timer = 6
+                print("Soihtu välähtää ja hahmo vetäytyy...")
+                move_drifter()
+                continue  # siirry seuraavaan vuoroon
+
+            else:
+                # Jos yrität liikkua → jos huoneessa on poistumistie, annat pelaajan paeta
+                parts = user.split(" ", 1)
+
+                if parts[0] == "mene" and len(parts) > 1:
+                    direction = parts[1]
+                    if direction in rooms[currentRoom]["exits"]:
+                        # PAKO ONNISTUU
+                        currentRoom = rooms[currentRoom]["exits"][direction]
+                        print("Juokset paniikissa pois huoneesta!")
+                        show_room()
+                        status()
+                        continue
+
+                # Jos ei paennut → kuolee
+                if drifter_encounter():
+                    break
+
+        # --- VANHA KOODISI ALKAA TÄSTÄ: ---
         ambient()
         drifter_hint()
         power_failure()
+
 
         # Pelko kasvaa, jos Drifter on viereisessä huoneessa eikä soihtua käytetä
         if drifter_room in rooms[currentRoom]["exits"].values() and not flare_active:
