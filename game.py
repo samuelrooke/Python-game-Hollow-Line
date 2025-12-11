@@ -1,5 +1,6 @@
 import json
 import random
+import textwrap  # rivinvaihtojen hallintaan
 
 # ------------- DATAN LATAUS -------------
 
@@ -8,15 +9,26 @@ with open("rooms.json", "r", encoding="utf-8") as f:
 
 # ------------- GLOBAALI TILA -------------
 
-inventory = []                  # pelaajan kantamat esineet (nimet merkkijonoina)
-currentRoom = "entrance_shaft"  # aloitushuoneen tunniste
+inventory = []                    # pelaajan kantamat esineet (nimet merkkijonoina)
+currentRoom = "sisaantulokaytava" # aloitushuoneen tunniste (vastaa JSONia)
+drifter_room = "kiskokuoppa"      # Drifterin aloitussijainti (vastaa JSONia)
 
-drifter_room = "rail_pit"       # Drifterin aloitussijainti
 flare_active = False
 flare_timer = 0
 
-fear = 0                        # 0–10, kun 10 => hermoromahdus
-drifter_met_with_flare = False  # vaikuttaa loppukohtaukseen
+fear = 0                          # 0–10, kun 10 => hermoromahdus
+drifter_met_with_flare = False    # vaikuttaa loppukohtaukseen
+
+score = 0                         # pisteet
+visited_rooms = set()             # huoneet, joissa on käyty
+
+# ------------- APUTOIMINTO: RIVINVAIHDOT -------------
+
+def wrap(text):
+    """Palauttaa tekstin rivitettynä, jotta se mahtuu konsoliin paremmin."""
+    if not text:
+        return ""
+    return "\n".join(textwrap.wrap(text, width=80))
 
 
 # ------------- KÄYTTÖOHJE -------------
@@ -24,19 +36,19 @@ drifter_met_with_flare = False  # vaikuttaa loppukohtaukseen
 def instructions():
     print(r"""
  ██░ ██  ▒█████   ██▓     ██▓     ▒█████   █     █░    ██▓     ██▓ ███▄    █ ▓█████ 
-▓██░ ██▒▒██▒  ██▒▓██▒    ▓██▒    ▒██▒  ██▒▓█░ █ ░█░   ▓██▒    ▓██▒ ██ ▀█   █ ▓█   ▀ 
-▒██▀▀██░▒██░  ██▒▒██░    ▒██░    ▒██░  ██▒▒█░ █ ░█    ▒██░    ▒██▒▓██  ▀█ ██▒▒███   
-░▓█ ░██ ▒██   ██░▒██░    ▒██░    ▒██   ██░░█░ █ ░█    ▒██░    ░██░▓██▒  ▐▌██▒▒▓█  ▄ 
-░▓█▒░██▓░ ████▓▒░░██████▒░██████▒░ ████▓▒░░░██▒██▓    ░██████▒░██░▒██░   ▓██░░▒████▒
- ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░░ ▒░▓  ░░ ▒░▒░▒░ ░ ▓░▒ ▒     ░ ▒░▓  ░░▓  ░ ▒░   ▒ ▒ ░░ ▒░ ░
- ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░░ ░ ▒  ░  ░ ▒ ▒░   ▒ ░ ░     ░ ░ ▒  ░ ▒ ░░ ░░   ░ ▒░ ░ ░  ░
- ░  ░░ ░░ ░ ░ ▒    ░ ░     ░ ░   ░ ░ ░ ▒    ░   ░       ░ ░    ▒ ░   ░   ░ ░    ░   
- ░  ░  ░    ░ ░      ░  ░    ░  ░    ░ ░      ░           ░  ░ ░           ░    ░  ░
+ ▓██░ ██▒▒██▒  ██▒▓██▒    ▓██▒    ▒██▒  ██▒▓█░ █ ░█░   ▓██▒    ▓██▒ ██ ▀█   █ ▓█   ▀ 
+ ▒██▀▀██░▒██░  ██▒▒██░    ▒██░    ▒██░  ██▒▒█░ █ ░█    ▒██░    ▒██▒▓██  ▀█ ██▒▒███   
+ ░▓█ ░██ ▒██   ██░▒██░    ▒██░    ▒██   ██░░█░ █ ░█    ▒██░    ░██░▓██▒  ▐▌██▒▒▓█  ▄ 
+ ░▓█▒░██▓░ ████▓▒░░██████▒░██████▒░ ████▓▒░░░██▒██▓    ░██████▒░██░▒██░   ▓██░░▒████▒
+  ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▓  ░░ ▒░▓  ░░ ▒░▒░▒░ ░ ▓░▒ ▒     ░ ▒░▓  ░░▓  ░ ▒░   ▒ ▒ ░░ ▒░ ░
+  ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░ ▒  ░░ ░ ▒  ░  ░ ▒ ▒░   ▒ ░ ░     ░ ░ ▒  ░ ▒ ░░ ░░   ░ ▒░ ░ ░  ░
+  ░  ░░ ░░ ░ ░ ▒    ░ ░     ░ ░   ░ ░ ░ ▒    ░   ░       ░ ░    ▒ ░   ░   ░ ░    ░   
+  ░  ░  ░    ░ ░      ░  ░    ░  ░    ░ ░      ░           ░  ░ ░           ░    ░  ░
 """)
     print("""
 Tervetuloa Hollow Lineen.
 
-Olet herännyt hylätyllä metroalueella, kaukana pinnasta. 
+Olet herännyt hylätyllä metroalueella, kaukana pinnasta.
 Käytävät jatkuvat pimeään ja jokin liikkuu linjoilla hitaasti.
 
 KOMENNOT (kirjoita pienillä kirjaimilla):
@@ -69,6 +81,7 @@ def status():
     else:
         print("Mukanasi: ei mitään")
     print(f"Pelko: {fear}/10")
+    print(f"Pisteet: {score}")
 
 
 def show_room():
@@ -76,15 +89,15 @@ def show_room():
 
     print()
     print(room["name"])
-    print(room["description"])
+    print(wrap(room["description"]))
 
     item = room.get("item")
     if item:
         print(f"Lattialla on esine: {item}.")
 
     exits = ", ".join(room["exits"].keys())
+    print("----------------")
     print(f"Poistumistiet: {exits}")
-    print()
 
 
 # ------------- TUNNELMALINJAT -------------
@@ -98,7 +111,6 @@ ambient_lines = [
     "Jokin kolisee etäämmällä… sitten hiljenee kuin se olisi pysähtynyt kuuntelemaan."
 ]
 
-
 def ambient():
     if random.random() < 0.25:
         print(random.choice(ambient_lines))
@@ -108,7 +120,7 @@ def ambient():
 
 def power_failure():
     global fear
-    if random.random() < 0.10:
+    if random.random() < 0.05:
         print("Pimeys tuntuu tihenevän ympärilläsi. Selkäpiitäsi karmii.")
         fear = min(fear + 1, 10)
 
@@ -144,7 +156,8 @@ def drifter_encounter():
     Palauttaa True jos peli päättyy kohtaamiseen (kuolema tai vapautus),
     muuten False.
     """
-    global drifter_met_with_flare
+    global drifter_met_with_flare, score
+
     if currentRoom != drifter_room:
         return False
 
@@ -154,6 +167,7 @@ def drifter_encounter():
         if not drifter_met_with_flare:
             print("Hehkuva soihtu pakottaa hahmon perääntymään. Se taittuu varjoihin ja vetäytyy kauemmas.")
             drifter_met_with_flare = True
+            score += 15  # selvisit ensimmäisestä suorasta kohtaamisesta
             move_drifter()
             return False
         else:
@@ -161,18 +175,24 @@ def drifter_encounter():
             print("Valo leikkaa sen lävitse, kunnes mitään kiinteää ei enää ole.")
             print("Pöly hiipii ilmaan ja metro vaikenee ympärilläsi.")
             print("Se, mikä vaelsi näillä linjoilla, ei enää palaa.")
+            score += 30  # Drifter tuhottu
+            print(f"Pisteet: {score}")
             return True
     else:
         print("Yrität tavoittaa turvaa, jota ei ole enää lähettyvillä.")
         print("Jääkylmä läsnäolo sulkeutuu ympärilläsi ja tunneli nielee sinut.")
         print(" SINÄ KUOLIT – PELI PÄÄTTYY")
+        print(f"Pisteet: {score}")
         return True
 
 
 # ------------- PELIN PÄÄKOODI -------------
 
 def main():
-    global currentRoom, flare_active, flare_timer, fear
+    global currentRoom, flare_active, flare_timer, fear, score, visited_rooms
+
+    # merkitään aloitushuone käydyksi
+    visited_rooms.add(currentRoom)
 
     instructions()
     show_room()
@@ -195,6 +215,7 @@ def main():
 
         if fear >= 10:
             print("Hermosi pettävät. Juokset vailla suuntaa, kunnes käytäväverkosto nielaisee sinut.")
+            print(f"Pisteet: {score}")
             break
 
         move = input("> ").strip().lower().split(" ", 1)
@@ -210,11 +231,18 @@ def main():
         # --- liikkuminen ---
         if action == "mene":
             if not arg:
-                print("Mihin suuntaan haluat mennä?")
+                # Näytä selkeästi mihin suuntiin voi mennä
+                print("Voit mennä suuntiin: " + ", ".join(room["exits"].keys()))
             elif arg in room["exits"]:
                 if "one_way" in room and arg in room["one_way"]:
                     print("Tähän suuntaan pääsee, mutta samaa reittiä ei voi palata.")
                 currentRoom = room["exits"][arg]
+
+                # pisteitä uudesta huoneesta
+                if currentRoom not in visited_rooms:
+                    visited_rooms.add(currentRoom)
+                    score += 10
+
                 show_room()
                 status()
             else:
@@ -232,6 +260,7 @@ def main():
                     print(f"Nostat esineen '{arg}' mukaasi.")
                     inventory.append(arg)
                     room["item"] = None
+                    score += 5  # esineen löytämisestä pisteitä
                 else:
                     print(f"Et näe täällä esinettä nimeltä '{arg}'.")
 
@@ -266,19 +295,20 @@ def main():
         elif action == "tutki":
             if "secret" in room:
                 print("Tutkit ympäristöä tarkemmin.")
-                print(room["secret"])
+                print(wrap(room["secret"]))
                 hidden = room.get("hidden_item")
                 if hidden:
                     print(f"Löydät esineen: {hidden}.")
                     inventory.append(hidden)
                     room["hidden_item"] = None
+                    score += 8  # salaisen esineen löytämisestä enemmän pisteitä
             else:
                 print("Tutkit aluetta, mutta et löydä mitään uutta.")
 
         # --- muistiinpanot / tekstit ---
         elif action == "lue":
             if "notes" in room:
-                print(room["notes"])
+                print(wrap(room["notes"]))
             else:
                 print("Täällä ei ole mitään luettavaa.")
 
@@ -297,6 +327,7 @@ def main():
         # --- pelin lopetus ---
         elif action in ("lopeta", "poistu", "quit", "exit"):
             print("Istahdat pölyn ja hiljaisuuden keskelle ja annat tunneleiden pitää tarinasi.")
+            print(f"Pisteet: {score}")
             break
 
         else:
@@ -310,22 +341,26 @@ def main():
         # --- mahdolliset loppuratkaisut ---
 
         # Ruosteportin pako polttimen kanssa
-        if currentRoom == "rust_gate" and "poltin" in inventory:
+        if currentRoom == "ruosteportti" and "poltin" in inventory:
+            score += 50
             print("Käytät poltinta ja leikkaat puhki Ruosteportin paksun metallin.")
             print("Portaikko nousee ylös purevaan kylmään ilmaan.")
             print("Astut vanhojen linjojen yläpuolelle kalpean taivaan alle.")
             print("Olet löytänyt tien ulos.")
             print(" SINÄ VOITIT")
+            print(f"Pisteet: {score}")
             break
 
         # Signaaliarkiston loppu sirun ja vanhan kortin kanssa
-        if currentRoom == "signal_archive" and "vanha_kortti" in inventory and "siru" in inventory:
+        if currentRoom == "signaaliarkisto" and "vanha_kortti" in inventory and "siru" in inventory:
+            score += 50
             print("Asetat sirun haljenneeseen konsoliin ja pyyhkäiset vanhan kortin lukijan ohi.")
             print("Syvällä allasi lukot vapautuvat raskaalla, matalalla äänellä.")
             print("Piilossa ollut huoltoputki avautuu ja lähtee nousemaan ylemmäs.")
             print("Pitkän nousun jälkeen saavut tyhjälle valvomolle, joka katsoo yhä kaupungin ylle.")
             print("Jätät metron taaksesi.")
             print(" SINÄ VOITIT")
+            print(f"Pisteet: {score}")
             break
 
 

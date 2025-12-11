@@ -157,9 +157,7 @@
             "itä": "katkaisuhuone"
         },
         "item": "vanha_kortti",
-
-    "notes": "Luokiteltu asiakirja Tietoluokitus: Erittäin Salattu - Projektin Kulku / Rata 6 laajennus:\n\n\"Murmanskin kaupungin myöntämän metrolaajennusluvan jälkeen aloimme laajentaa rataverkostoa kaupungin eteläosiin. Rakennusprojektin ensimmäisinä viikkoina havaittiin ilmiöitä, joiden ajateltiin johtuvan geologisista häiriöistä tai mineraaleista, jotka voisivat sekoittaa mittareita ja järjestelmiä.\n\nEmme kuitenkaan löytäneet geologista vikaa. Kivi oli vakaata - mutta tila sen ympärillä ei. Työntekijät raportoivat varjoja, jotka eivät seuranneet valon kulmaa, sekä askeleita, jotka kuuluivat ilman aiheuttajaa. 26.4.1957 Ryhmä B:n psyykkinen tila romahti muutamassa päivässä, ja heidät poistettiin alueelta.\n\n28.4.1957 toinen tiimi teki ensimmäisen selkeän havainnon: äänen, joka muistutti puhetta, mutta ei vastannut mitään ihmisperäistä taajuutta. 30.4.1957 varjoista tiivistyi hahmo, joka muistutti ihmistä vain ääriviivoiltaan - ei liikkeeltään.\n\nSe ei reagoinut ääneen eikä seurannut ketään. Se pysyi valon reunan ulkopuolella, kuin jokin olisi juuttunut kahden tason väliin. Sen ilmestyessä ilma aaltoili ja mittarit ylikuormittuivat.\n\nTutkimusten mukaan ilmiö ei siedä lämpöä. Kun sen reitille suunnattiin lämpölähde, sen rakenne hajosi ja tila palautui normaaliksi. Tämä on ainoa havaittu tapa tuhota se.\n\nHavaintoa kutsutaan 'Drifteriksi', koska se ei kiinnity seiniin, lattiaan tai varjoihin - se ajelehtii.\n\nOhje: jos näet hahmon, älä lähesty. Käytä lämpöä. Lämpö tappaa sen.\""
-
+        "notes": "Luokiteltu asiakirja Tietoluokitus: Erittäin Salattu - Projektin Kulku / Rata 6 laajennus:\n\n\"Murmanskin kaupungin myöntämän metrolaajennusluvan jälkeen aloimme laajentaa rataverkostoa kaupungin eteläosiin. Rakennusprojektin ensimmäisinä viikkoina havaittiin ilmiöitä, joiden ajateltiin johtuvan geologisista häiriöistä tai mineraaleista, jotka voisivat sekoittaa mittareita ja järjestelmiä.\n\nEmme kuitenkaan löytäneet geologista vikaa. Kivi oli vakaata - mutta tila sen ympärillä ei. Työntekijät raportoivat varjoja, jotka eivät seuranneet valon kulmaa, sekä askeleita, jotka kuuluivat ilman aiheuttajaa. 26.4.1957 Ryhmä B:n psyykkinen tila romahti muutamassa päivässä, ja heidät poistettiin alueelta.\n\n28.4.1957 toinen tiimi teki ensimmäisen selkeän havainnon: äänen, joka muistutti puhetta, mutta ei vastannut mitään ihmisperäistä taajuutta. 30.4.1957 varjoista tiivistyi hahmo, joka muistutti ihmistä vain ääriviivoiltaan - ei liikkeeltään.\n\nSe ei reagoinut ääneen eikä seurannut ketään. Se pysyi valon reunan ulkopuolella, kuin jokin olisi juuttunut kahden tason väliin. Sen ilmestyessä ilma aaltoili ja mittarit ylikuormittuivat.\n\nTutkimusten mukaan ilmiö ei siedä lämpöä. Kun sen reitille suunnattiin lämpölähde, sen rakenne hajosi ja tila palautui normaaliksi. Tämä on ainoa havaittu tapa tuhota se.\n\nHavaintoa kutsutaan 'Drifteriksi', koska se ei kiinnity seiniin, lattiaan tai varjoihin - se ajelehtii.\n\nOhje: jos näet hahmon, älä lähesty. Käytä lämpöä. Lämpö tappaa sen.\""
     },
 
     "katkaisuhuone": {
@@ -222,14 +220,14 @@
         "description": "Metalliritilät kolisevat jalkojesi alla ja ääni kulkee pitkälle molempiin suuntiin, herättäen kaiut jotka palaavat hieman väärässä rytmissä. Seinissä kulkee tarkastuskaiteita, joiden pintaan on kaiverrettu syviä, epäsäännöllisiä uurteita. Käytävä kaartuu kevyesti ennen porttia.",
         "exits": {
             "etelä": "kaapelikanava",
-            "itä": "ruosteportti"
+            "itä": "ruosteinen_portti"
         },
         "item": null,
         "notes": "Ritilän päällä on himmeä jälki - kuin jokin olisi kulkenut siitä monta kertaa, hitaasti ja painavana."
     },
 
-    "ruosteportti": {
-        "name": "Ruosteportti",
+    "ruosteinen_portti": {
+        "name": "ruosteinen_portti",
         "description": "Korkea portti, jonka pinta on punaisen ruosteen peittämä ja halkeillut paineesta. Se näyttää siltä, kuin sitä olisi lyöty ja poltettu monilla eri välineillä. Portin juurella lepää outo avain, jonka metalli tuntuu jäätä kylmemmältä. Portin takaa kuuluu ajoittain matala humahdus, joka kuulostaa melkein huokaukselta.",
         "exits": {
             "länsi": "tarkastuskaytava"
