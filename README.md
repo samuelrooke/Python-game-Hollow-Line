@@ -2,12 +2,41 @@
 
 # Hollow Line
 
-Hollow Line is a command line survival tale set in a long-sealed metro system where time has stopped moving. You wake in the dark among rust, dust and cold concrete, with no memory of how you arrived. The corridors stretch into quiet places where water drips from broken pipes and distant echoes roll through empty tracks.
+Hollow Line on komentorivipohjainen selviytymisteemainen tekstiseikkailupeli, joka sijoittuu hylättyyn metrojärjestelmään syvälle maan alle. Pelaaja herää yksin kylmässä ja pimeässä ympäristössä ilman tietoa siitä, miten on päätynyt sinne. Tunnelit ovat täynnä ruostetta, pölyä ja hylättyjä rakenteita, ja jossain käytävien välissä jokin yhä liikkuu.
 
-Your only way out is through a handful of forgotten rooms scattered across the ruins. A lantern hides in one place, a metal hook in another and a locked hatch waits deep in the dark. Somewhere along the service route a shape wanders in slow, patient cycles. It does not chase, yet crossing its path too often invites danger that grows by degrees.
+Peliä pelataan kokonaan tekstikomennoilla. Pelaaja tutkii huoneita, lukee muistiinpanoja, kerää esineitä ja liikkuu metroalueen eri osissa etsiessään ulospääsyä. Pelimaailma on rakenteeltaan kiinteä, mutta reagoi pelaajan tekoihin, ja huolellinen tutkiminen palkitaan.
 
-Every step forward shifts something in the dark. The tracks hum with distant tension, metal sighs behind the walls and the old air moves as if stirred by unseen currents. The deeper you go, the more the place feels aware of you, as if it has been waiting for someone to walk these paths again.
+Metroverkostossa vaeltaa vihamielinen olento nimeltä **Drifter**. Se ei jahtaa pelaajaa suoraan, mutta sen läheisyys kasvattaa uhkaa ja pelkoa ajan myötä. Liiallinen altistuminen johtaa häviöön. Valo ja lämpö voivat torjua Drifterin hetkellisesti, mutta käytettävät välineet ovat rajallisia ja niiden käyttö vaatii harkintaa.
 
-You must decide when to press on and when to pause, when to risk a corridor and when to turn back. Light helps, tools matter and attention keeps you alive. Nothing in these tunnels is loud, nothing is hurried, yet mistakes build quietly until they become final.
+## Pelin tavoitteet
 
-Reach the hatch. Bring what the place offers. Leave before the dark remembers your shape too clearly.
+Pelin päätavoitteena on löytää keino paeta metrosta. Tämä voidaan saavuttaa kahdella eri tavalla:
+- käyttämällä lämpöön perustuvaa työkalua oikeassa paikassa
+- yhdistämällä tietyt esineet ja aktivoimalla vanha konsoli syvemmällä metroalueella
+
+Pelin aikana pelaaja kerää pisteitä tutkimisesta, esineiden löytämisestä ja selviytymisestä. Pisteet eivät vaikuta suoraan lopputulokseen, mutta ne kertovat, kuinka paljon pelimaailmaa tuli nähtyä.
+
+## Ominaisuudet
+
+- Komentorivipohjainen tekstiseikkailu
+- Laaja, käsin suunniteltu pelimaailma
+- Satunnaisesti liikkuva vihollinen
+- Pelko- ja pistemekaniikka
+- Useampi mahdollinen loppuratkaisu
+- Sisällön ja pelilogiikan erottaminen JSON-rakenteella
+
+## Pelaaminen
+
+Peli käynnistetään Pythonilla komentoriviltä. Pelaaja syöttää yksinkertaisia yhden tai kahden sanan komentoja, kuten:
+- mene itä
+- ota soihtu
+- käytä poltin
+- tutki
+- katsele
+
+
+Peli jatkuu, kunnes pelaaja joko pakenee metrosta tai menettää pelin.
+
+## Huomio
+
+Hollow Line on tunnelmallinen ja pelottava peli, jossa uhka rakentuu hitaasti. Mikään ei tapahdu nopeasti, mutta virheet kasaantuvat. Pelaajaa kannustetaan lukemaan ympäristöä tarkasti ja tekemään päätökset harkiten.
