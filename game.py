@@ -11,7 +11,7 @@ with open("rooms.json", "r", encoding="utf-8") as f:
     items = rooms.get("items", {})
 
 
-# ------------- globaali -------------
+# globaali 
 
 inventory = []
 currentRoom = "sisaantulokaytava"
@@ -37,7 +37,7 @@ def wrap(text):
     return "\n".join(textwrap.wrap(text, width=80))
 
 
-# ------------- ohje -------------
+# ohje
 
 def instructions():
     print("""
@@ -57,6 +57,8 @@ Tervetuloa Hollow Lineen.
 Olet herännyt hylätyllä metroalueella, kaukana pinnasta.
 Käytävät jatkuvat pimeään ja jokin liikkuu linjoilla hitaasti.
 
+Lue huolellisesti kaikki teksti, saatat muuten missata jotain! 
+
 KOMENNOT (kirjoita pienillä kirjaimilla):
 
     mene pohjoinen / etelä / itä / länsi
@@ -75,7 +77,7 @@ KOMENNOT (kirjoita pienillä kirjaimilla):
 """)
 
 
-# ------------- tila -------------
+# tila
 
 def status():
     huone = rooms[currentRoom]
@@ -106,7 +108,7 @@ def show_room():
     print("----------------")
     print(f"Poistumistiet: {exits}")
 
-# --- kontekstuaalinen vihje ---
+# kontekstuaalinen vihje
 
     if currentRoom == "ruosteinen_portti" and "poltin" in inventory:
         print()
@@ -123,7 +125,7 @@ def show_room():
 
 
 
-# ------------- tunnelmalinjat -------------
+# tunnelmalinjat
 
 ambient_lines = [
     "Kaukaa tunnelista kuuluu metallin hidas raapaisu.",
@@ -139,7 +141,7 @@ def ambient():
         print(random.choice(ambient_lines))
 
 
-# ------------- satunnaiset tapahtumat -------------
+# satunnaiset tapahtumat
 
 def power_failure():
     global fear
@@ -156,7 +158,7 @@ def drifter_hint():
         print("Naapuritunnelissa varjot värähtävät. Jokin liikkuu siellä hiljaa.")
 
 
-# ------------- vihollisen (drifterin) logiikka -------------
+# vihollisen (drifterin) logiikka
 
 def move_drifter():
     global drifter_room
@@ -210,7 +212,7 @@ def drifter_encounter():
 
 
 
-# ------------- pelin päälooppi -------------
+# pelin päälooppi
 
 def main():
     global currentRoom, flare_active, flare_timer, fear, score, visited_rooms
@@ -231,7 +233,7 @@ def main():
 
     while True:
 
-        # --- drifterin etäisyys tarkistus ---
+        # drifterin etäisyys tarkistus
 
         drifter_exits = rooms[drifter_room]["exits"].values()
 
@@ -270,7 +272,7 @@ def main():
                 continue  # siirry seuraavaan vuoroon
 
             else:
-                # Jos yrität liikkua -> jos huoneessa on poistumistie, annat pelaajan paeta
+                # jos yrität liikkua -> jos huoneessa on poistumistie, annetaan pelaajan paeta
                 parts = user.split(" ", 1)
 
                 if parts[0] == "mene" and len(parts) > 1:
@@ -283,7 +285,7 @@ def main():
                         status()
                         continue
 
-                # Jos ei paennut → kuolee
+                # jos ei paennut -> kuolee
                 if drifter_encounter():
                     break
 
@@ -317,10 +319,10 @@ def main():
 
         room = rooms[currentRoom]
 
-        # --- liikkuminen ---
+        # liikkuminen
         if action == "mene":
             if not arg:
-                # Näytä selkeästi mihin suuntiin voi mennä
+                # näytä selkeästi mihin suuntiin voi mennä
                 print("Voit mennä suuntiin: " + ", ".join(room["exits"].keys()))
             elif arg in room["exits"]:
                 if "one_way" in room and arg in room["one_way"]:
@@ -337,7 +339,7 @@ def main():
             else:
                 print("Siihen suuntaan ei pääse.")
 
-        # --- esineen ottaminen ---
+        # esineen ottaminen
         elif action == "ota":
             if not arg:
                 print("Mitä haluat ottaa?")
@@ -353,7 +355,7 @@ def main():
                 else:
                     print(f"Et näe täällä esinettä nimeltä '{arg}'.")
 
-        # --- esineen pudottaminen ---
+        # esineen pudottaminen
         elif action == "pudota":
             if not arg:
                 print("Mitä haluat pudottaa?")
@@ -368,7 +370,7 @@ def main():
                     room["item"] = arg
                     print(f"Pudotat esineen '{arg}' lattialle.")
 
-        # --- esineen käyttäminen ---
+        # esineen käyttäminen
         elif action == "käytä":
 
             if arg == "soihtu":
@@ -427,7 +429,7 @@ def main():
             - Jos jokin tuntuu reagoivan esineeseen, kokeile käyttää sitä
             """)
 
-        # --- tutkiminen (piilojutut) ---
+        # tutkiminen
         elif action == "tutki":
             if "secret" in room:
                 print("Tutkit ympäristöä tarkemmin.")
@@ -454,19 +456,19 @@ def main():
 
 
 
-        # --- huoneen kuvaus ---
+        # huoneen kuvaus
         elif action in ("katsele", "katso"):
             show_room()
             status()
 
-        # --- inventaario ---
+        # inventaario
         elif action in ("mukana", "inv", "i", "inventaario"):
             if inventory:
                 print("Mukanasi on: " + ", ".join(inventory))
             else:
                 print("Et kanna mitään mukanasi.")
 
-        # --- pelin lopetus ---
+        # pelin lopetus
         elif action in ("lopeta", "poistu", "quit", "exit"):
             print("Istahdat pölyn ja hiljaisuuden keskelle ja annat tunneleiden pitää tarinasi.")
             print(f"Pisteet: {score}")
@@ -475,12 +477,11 @@ def main():
         else:
             print("Tunneli ei tunnu ymmärtävän sitä, mitä yrität sanoa.")
 
-        # --- drifter liikkuu vuoron lopuksi ---
+        # drifter liikkuu vuoron lopuksi
         move_drifter()
 
-        # --- mahdolliset loppuratkaisut ---
 
-        # --- loppuratkaisun tarkistus ---
+        # loppuratkaisun tarkistus
         if ending == "ruosteportti":
             score += 50
 
