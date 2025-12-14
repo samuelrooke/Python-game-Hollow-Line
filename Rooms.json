@@ -1,4 +1,10 @@
 {
+    "items": {
+    "paperi": {
+      "text": "Paperiin on hahmoteltu karkea kartta.\n\nSisääntulo -> Laituri -> Huoltotunneli\n\nReunassa lukee:\n\"Valo ei pysäytä sitä, mutta lämpö pakottaa sen perääntymään.\""
+    }
+  },
+
     "sisaantulokaytava": {
         "name": "Sisääntulokäytävä",
         "description": "Heräät kylmän metalliseinän varassa. Akseli kohoaa korkeuksiin, kadoten pimeään, josta valuu alas kylmää ilmaa kuin varoituksena. Yläpuolella olevat tikkaat ovat ruostuneet poikki ja niiden jäänteet roikkuvat vinossa kuin katkenneet kylkiluut. Jaloissasi on ohut kerros mustaa pölyä, joka tuntuu liikahtaneen vasta hetki sitten - aivan kuin joku olisi juuri poistunut paikalta.",
@@ -16,8 +22,8 @@
             "länsi": "sisaantulokaytava",
             "itä": "huoltotunneli"
         },
-        "item": "lyhty",
-        "secret": "Eräs laatta nitkahtaa jalan alla ja paljastaa onttoa tilaa sen alla.",
+        "item": "taskulamppu",
+        "secret": "Eräs laatta nitkahtaa jalan alla ja paljastaa onttoa tilaa sen alla. löydät pariston ja laitat sen taskulamppuun, näet vähän paremmin mutta taskulamppu on niin huonossa kunnossa että siitä ei ole suurempaa hyötyä",
         "hidden_item": "paristo",
         "notes": "Seinälle piirretty liidulla: ympyrä, jonka sisällä risti, ja sen vieressä nuoli syvemmälle."
     },

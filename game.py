@@ -8,8 +8,10 @@ RESET = "\033[0m"
 
 with open("rooms.json", "r", encoding="utf-8") as f:
     rooms = json.load(f)
+    items = rooms.get("items", {})
 
-# ------------- GLOBAALI -------------
+
+# ------------- globaali -------------
 
 inventory = []
 currentRoom = "sisaantulokaytava"
@@ -35,7 +37,7 @@ def wrap(text):
     return "\n".join(textwrap.wrap(text, width=80))
 
 
-# ------------- KÄYTTÖOHJE -------------
+# ------------- ohje -------------
 
 def instructions():
     print("""
@@ -67,14 +69,13 @@ KOMENNOT (kirjoita pienillä kirjaimilla):
 
     mukana              - näytä, mitä kannat
     lopeta              - lopeta peli
-
+    help                - tulosta ohjesivu ja vinkit
+          
     käytä <esine>       - Pelissä on esineitä jonka käyttö on selviytymisen kannalta tärkeitä. esim. Soihtu. 
-
-Liiku varoen, kuuntele ääniä ja käytä valoa viisaasti.
 """)
 
 
-# ------------- TILAN NÄYTTÖ -------------
+# ------------- tila -------------
 
 def status():
     huone = rooms[currentRoom]
@@ -105,15 +106,24 @@ def show_room():
     print("----------------")
     print(f"Poistumistiet: {exits}")
 
-# --- kontekstuaalinen vihje ruosteisella portilla ---
+# --- kontekstuaalinen vihje ---
 
     if currentRoom == "ruosteinen_portti" and "poltin" in inventory:
         print()
         print("Ruosteinen portti näyttää haurastuneelta.")
         print("Kannat mukanasi työkalua, jonka kuumuus voisi tehdä tähän aukon.")
+    
+    if currentRoom == "signaaliarkisto" and "siru" in inventory and "vanha_kortti" in inventory:
+        print()
+        print("Huoneen reunassa huomaat lattialla raitoja,")
+        print("kuin jokin raskas olisi liikkunut saranoilla.")
+        print("Lähempänä paljastuu konsoli, jossa vilkkuu punainen valo.")
+        print("Kädessäsi oleva vanha kortti ja siru tuntuu loksahtavan yhteen ja haluat kokeille käyttää konsolia.")
 
 
-# ------------- TUNNELMALINJAT -------------
+
+
+# ------------- tunnelmalinjat -------------
 
 ambient_lines = [
     "Kaukaa tunnelista kuuluu metallin hidas raapaisu.",
@@ -129,7 +139,7 @@ def ambient():
         print(random.choice(ambient_lines))
 
 
-# ------------- SATUNNAISET TAPAHTUMAT -------------
+# ------------- satunnaiset tapahtumat -------------
 
 def power_failure():
     global fear
@@ -146,7 +156,7 @@ def drifter_hint():
         print("Naapuritunnelissa varjot värähtävät. Jokin liikkuu siellä hiljaa.")
 
 
-# ------------- DRIFTERIN LOGIIKKA -------------
+# ------------- vihollisen (drifterin) logiikka -------------
 
 def move_drifter():
     global drifter_room
@@ -200,7 +210,7 @@ def drifter_encounter():
 
 
 
-# ------------- PELIN PÄÄKOODI -------------
+# ------------- pelin päälooppi -------------
 
 def main():
     global currentRoom, flare_active, flare_timer, fear, score, visited_rooms
@@ -221,17 +231,19 @@ def main():
 
     while True:
 
-        # --- Drifterin etäisyys tarkistus
-        player_exits = rooms[currentRoom]["exits"].values()
+        # --- drifterin etäisyys tarkistus ---
+
+        drifter_exits = rooms[drifter_room]["exits"].values()
 
         if drifter_room == currentRoom:
             danger_distance = 2
-        elif drifter_room in player_exits:
+        elif currentRoom in drifter_exits:
             danger_distance = 1
         else:
             danger_distance = 0
 
-        # Viereinen huone → varoitus + pelko
+
+        # viereinen huone -> varoitus + pelko
         if danger_distance == 1:
             print(WARNING + "Kylmä väre käy pitkin selkääsi – jokin on aivan seinän takana..." + RESET)
             if not flare_active:
@@ -240,7 +252,7 @@ def main():
                     fear = min(fear + 1, 10)
                     fear_tick = 0
 
-        # Sama huone → yksi vuoro aikaa
+        # sama huone -> yksi vuoro aikaa
         if danger_distance == 2 and not flare_active:
             print(DANGER + "Pimeys paksuuntuu ympärilläsi. Drifter on HUONEESSA!" + RESET)
             print(WARNING + "Sinulla on YKSI vuoro aikaa karata tai käyttää soihtua!" + RESET)
@@ -249,19 +261,22 @@ def main():
 
             if user == "käytä soihtu" and "soihtu" in inventory:
                 flare_active = True
-                flare_timer = 6
-                print("Soihtu välähtää ja hahmo vetäytyy...")
+                flare_timer = 4
+                print("Soihtu välähtää kirkkaasti.")
+                print("Hahmo reagoi välittömästi lämpöön ja vetäytyy pimeyteen.")
+                print("Saat hetkeksi tilaa hengittää.")
+
                 move_drifter()
                 continue  # siirry seuraavaan vuoroon
 
             else:
-                # Jos yrität liikkua → jos huoneessa on poistumistie, annat pelaajan paeta
+                # Jos yrität liikkua -> jos huoneessa on poistumistie, annat pelaajan paeta
                 parts = user.split(" ", 1)
 
                 if parts[0] == "mene" and len(parts) > 1:
                     direction = parts[1]
                     if direction in rooms[currentRoom]["exits"]:
-                        # PAKO ONNISTUU
+                        # pako onnistuu
                         currentRoom = rooms[currentRoom]["exits"][direction]
                         print("Juokset paniikissa pois huoneesta!")
                         show_room()
@@ -277,17 +292,19 @@ def main():
         power_failure()
 
 
-        # Pelko kasvaa, jos Drifter on viereisessä huoneessa eikä soihtua käytetä
+
 
         if flare_active:
             flare_timer -= 1
             if flare_timer <= 0:
                 flare_active = False
-                print("Soihtu hiipuu ja sammuu. Varjot tihenevät ympärilläsi.")
+                print("Soihtu hiipuu ja sammuu.")
+                print("Lämpö katoaa ja varjot palaavat lähemmäs.")
 
+# pelko saavuttaa maksimin ja peli loppuu
         if fear >= 10:
             print("Hermosi pettävät. Juokset vailla suuntaa, kunnes käytäväverkosto nielaisee sinut.")
-            print(f"Pisteet: {score}")
+            print(f"HÄVISIT - Pisteet: {score}")
             break
 
         move = input("> ").strip().lower().split(" ", 1)
@@ -352,33 +369,63 @@ def main():
                     print(f"Pudotat esineen '{arg}' lattialle.")
 
         # --- esineen käyttäminen ---
-# --- esineen käyttäminen ---
         elif action == "käytä":
 
             if arg == "soihtu":
                 if "soihtu" in inventory:
                     flare_active = True
-                    flare_timer = 6
-                    print("Soihtu leimahtaa rajuun valoon ja kuumuuteen. Varjot vetäytyvät hetkeksi kauemmas.")
+                    flare_timer = 4
+                    inventory.remove("soihtu")
+
+                    print("Soihtu leimahtaa rajuun valoon ja kuumuuteen.")
+                    print("Lämpö ja valo pakottavat pimeyden loitolle.")
+                    print("Hetken kuluttua soihtu palaa loppuun eikä siitä ole enää apua.")
                 else:
                     print("Sinulla ei ole soihtua.")
 
             elif arg == "poltin":
-                if currentRoom == "ruosteinen_portti" and "poltin" in inventory:
+                if "poltin" not in inventory:
+                    print("Sinulla ei ole poltinta.")
+                elif currentRoom != "ruosteinen_portti":
+                    print("Tätä ei voi käyttää täällä.")
+                else:
                     print("Sytytät polttimen. Metalli alkaa hehkua ja antaa periksi.")
                     ending = "ruosteportti"
-                else:
-                    print("Poltin ei auta täällä.")
+
 
             elif arg == "konsoli":
-                if currentRoom == "signaaliarkisto" and "vanha_kortti" in inventory and "siru" in inventory:
+                if "vanha_kortti" not in inventory or "siru" not in inventory:
+                    print("Sinulta puuttuu jotain, jotta konsoli toimisi.")
+                elif currentRoom != "signaaliarkisto":
+                    print("Täällä ei ole mitään konsolia.")
+                else:
                     print("Konsoli herää henkiin. Syvällä rakenteissa lukot vapautuvat.")
                     ending = "arkisto"
-                else:
-                    print("Konsoli ei reagoi. Jokin puuttuu.")
+
 
             else:
                 print("Et voi käyttää sitä.")
+
+
+        elif action in ("help", "ohje", "apu"):
+            print("""
+            KOMENNOT:
+            mene <suunta>        liiku huoneesta toiseen
+            ota <esine>         poimi esine mukaasi
+            pudota <esine>      jätä esine huoneeseen
+            käytä <esine>       käytä esinettä tilanteen mukaan
+            tutki               etsi piilossa olevia asioita
+            lue                 lue huoneen muistiinpanot tai esineitä
+            katsele             näytä huoneen kuvaus uudelleen
+            mukana              näytä inventaario
+            lopeta              lopeta peli
+
+            VINKKEJÄ:
+            - Kaikilla esineillä ei ole käyttöä heti
+            - Ympäristö antaa vihjeitä esineiden käytöstä
+            - Valo ja lämpö vaikuttavat Drifteriin
+            - Jos jokin tuntuu reagoivan esineeseen, kokeile käyttää sitä
+            """)
 
         # --- tutkiminen (piilojutut) ---
         elif action == "tutki":
@@ -395,10 +442,17 @@ def main():
                 print("Tutkit aluetta, mutta et löydä mitään uutta.")
 
         elif action == "lue":
-            if "notes" in room:
+            if arg:
+                if arg in inventory and arg in items:
+                    print(wrap(items[arg]["text"]))
+                else:
+                    print("Et voi lukea sitä.")
+            elif "notes" in room:
                 print(wrap(room["notes"]))
             else:
                 print("Täällä ei ole mitään luettavaa.")
+
+
 
         # --- huoneen kuvaus ---
         elif action in ("katsele", "katso"):
