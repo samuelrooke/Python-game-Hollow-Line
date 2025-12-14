@@ -30,8 +30,8 @@
             "itä": "tunneliristeys",
             "etelä": "sivukaytava"
         },
-        "item": null,
-        "notes": "Putkeen on kirjoitettu tussilla: \"Jos näet sen: älä pysähdy. Valo kääntää sen pois.\""
+        "item": "soihtu",
+        "notes": "Putkeen on kirjoitettu tussilla: \"Jos näet sen: älä pysähdy. Valo kääntää sen pois, ota soihtu: se ajaa sen pois.\""
     },
 
     "sivukaytava": {
@@ -129,13 +129,13 @@
 
     "syva_rata": {
         "name": "Syvä rata",
-        "description": "Pitkä, käyttämätön raide ulottuu pimeyteen, kuin se jatkuisi loputtomiin. Ilma raiteilla tuntuu painostavalta ja sähköiseltä, ja jokainen askel saa etäisen kumahduksen kiertämään tunnelin läpi. Sivussa lepää rikkinäinen hätäkotelo, jonka sisältä pilkottaa yksi ehjä soihtu.",
+        "description": "Pitkä, käyttämätön raide ulottuu pimeyteen, kuin se jatkuisi loputtomiin. Ilma raiteilla tuntuu painostavalta ja sähköiseltä, ja jokainen askel saa etäisen kumahduksen kiertämään tunnelin läpi",
         "exits": {
             "etelä": "tunneliristeys",
             "pohjoinen": "kiskokuoppa"
         },
-        "item": "soihtu",
-        "notes": "Kotelon kannessa: \"KÄYTÄ TARVITTAESSA. SE PELKÄÄ VALOA.\""
+        "item": null,
+        "notes": "Jatka varoen..."
     },
 
     "kiskokuoppa": {

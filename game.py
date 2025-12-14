@@ -1,40 +1,35 @@
 import json
 import random
-import textwrap  # rivinvaihtojen hallintaan
-# --- VÄRIT ---
-DANGER = "\033[91m"   # punainen
-WARNING = "\033[93m"  # keltainen
+import textwrap
+DANGER = "\033[91m"   
+WARNING = "\033[93m"  
+GREEN = "\033[92m"
 RESET = "\033[0m"
-
-
-# ------------- DATAN LATAUS -------------
 
 with open("rooms.json", "r", encoding="utf-8") as f:
     rooms = json.load(f)
 
-# ------------- GLOBAALI TILA -------------
+# ------------- GLOBAALI -------------
 
-inventory = []                    # pelaajan kantamat esineet (nimet merkkijonoina)
-currentRoom = "sisaantulokaytava" # aloitushuoneen tunniste (vastaa JSONia)
-drifter_room = "kiskokuoppa"      # Drifterin aloitussijainti (vastaa JSONia)
+inventory = []
+currentRoom = "sisaantulokaytava"
+drifter_room = "kiskokuoppa"
 
 flare_active = False
 flare_timer = 0
+ending = None
 
 fear = 0                          # 0-10, kun 10 => hermoromahdus
-drifter_met_with_flare = False    # vaikuttaa loppukohtaukseen
+drifter_met_with_flare = False
 
-score = 0                         # pisteet
-visited_rooms = set()             # huoneet, joissa on käyty
+score = 0
+max_score = 366
+visited_rooms = set()
 
 danger_distance = 0
 fear_tick = 0
 
-
-# ------------- APUTOIMINTO: RIVINVAIHDOT -------------
-
 def wrap(text):
-    """Palauttaa tekstin rivitettynä, jotta se mahtuu konsoliin paremmin."""
     if not text:
         return ""
     return "\n".join(textwrap.wrap(text, width=80))
@@ -73,7 +68,7 @@ KOMENNOT (kirjoita pienillä kirjaimilla):
     mukana              - näytä, mitä kannat
     lopeta              - lopeta peli
 
-    käytä soihtu        - käyttää soihtua (jos sinulla on se)
+    käytä <esine>       - Pelissä on esineitä jonka käyttö on selviytymisen kannalta tärkeitä. esim. Soihtu. 
 
 Liiku varoen, kuuntele ääniä ja käytä valoa viisaasti.
 """)
@@ -90,6 +85,7 @@ def status():
     else:
         print("Mukanasi: ei mitään")
     print(f"Pelko: {fear}/10")
+    print("-------------------")
     print(f"Pisteet: {score}")
 
 
@@ -108,6 +104,13 @@ def show_room():
     exits = ", ".join(room["exits"].keys())
     print("----------------")
     print(f"Poistumistiet: {exits}")
+
+# --- kontekstuaalinen vihje ruosteisella portilla ---
+
+    if currentRoom == "ruosteinen_portti" and "poltin" in inventory:
+        print()
+        print("Ruosteinen portti näyttää haurastuneelta.")
+        print("Kannat mukanasi työkalua, jonka kuumuus voisi tehdä tähän aukon.")
 
 
 # ------------- TUNNELMALINJAT -------------
@@ -152,7 +155,6 @@ def move_drifter():
     if not exits:
         return
 
-    # Kun soihtu palaa, Drifter yrittää välttää pelaajan huonetta
     if flare_active:
         filtered = [r for r in exits if r != currentRoom]
         if filtered:
@@ -177,7 +179,7 @@ def drifter_encounter():
         if not drifter_met_with_flare:
             print("Hehkuva soihtu pakottaa hahmon perääntymään. Se taittuu varjoihin ja vetäytyy kauemmas.")
             drifter_met_with_flare = True
-            score += 15  # selvisit ensimmäisestä suorasta kohtaamisesta
+            score += 15
             move_drifter()
             return False
         else:
@@ -185,7 +187,7 @@ def drifter_encounter():
             print("Valo leikkaa sen lävitse, kunnes mitään kiinteää ei enää ole.")
             print("Pöly hiipii ilmaan ja metro vaikenee ympärilläsi.")
             print("Se, mikä vaelsi näillä linjoilla, ei enää palaa.")
-            score += 30  # Drifter tuhottu
+            score += 30
             print(f"Pisteet: {score}")
             return True
     else:
@@ -202,7 +204,7 @@ def drifter_encounter():
 
 def main():
     global currentRoom, flare_active, flare_timer, fear, score, visited_rooms
-    global danger_distance, fear_tick
+    global danger_distance, fear_tick, ending
 
 
     # merkitään aloitushuone käydyksi
@@ -217,9 +219,9 @@ def main():
 
 
 
-while True:
+    while True:
 
-        # --- Drifterin etäisyys tarkistus (JOKA VUOROLLA) ---
+        # --- Drifterin etäisyys tarkistus
         player_exits = rooms[currentRoom]["exits"].values()
 
         if drifter_room == currentRoom:
@@ -229,7 +231,7 @@ while True:
         else:
             danger_distance = 0
 
-        # Viereinen huone → varoitus + pelkoa
+        # Viereinen huone → varoitus + pelko
         if danger_distance == 1:
             print(WARNING + "Kylmä väre käy pitkin selkääsi – jokin on aivan seinän takana..." + RESET)
             if not flare_active:
@@ -270,15 +272,12 @@ while True:
                 if drifter_encounter():
                     break
 
-        # --- VANHA KOODISI ALKAA TÄSTÄ: ---
         ambient()
         drifter_hint()
         power_failure()
 
 
         # Pelko kasvaa, jos Drifter on viereisessä huoneessa eikä soihtua käytetä
-        if drifter_room in rooms[currentRoom]["exits"].values() and not flare_active:
-            fear = min(fear + 1, 10)
 
         if flare_active:
             flare_timer -= 1
@@ -353,7 +352,9 @@ while True:
                     print(f"Pudotat esineen '{arg}' lattialle.")
 
         # --- esineen käyttäminen ---
+# --- esineen käyttäminen ---
         elif action == "käytä":
+
             if arg == "soihtu":
                 if "soihtu" in inventory:
                     flare_active = True
@@ -361,8 +362,23 @@ while True:
                     print("Soihtu leimahtaa rajuun valoon ja kuumuuteen. Varjot vetäytyvät hetkeksi kauemmas.")
                 else:
                     print("Sinulla ei ole soihtua.")
+
+            elif arg == "poltin":
+                if currentRoom == "ruosteinen_portti" and "poltin" in inventory:
+                    print("Sytytät polttimen. Metalli alkaa hehkua ja antaa periksi.")
+                    ending = "ruosteportti"
+                else:
+                    print("Poltin ei auta täällä.")
+
+            elif arg == "konsoli":
+                if currentRoom == "signaaliarkisto" and "vanha_kortti" in inventory and "siru" in inventory:
+                    print("Konsoli herää henkiin. Syvällä rakenteissa lukot vapautuvat.")
+                    ending = "arkisto"
+                else:
+                    print("Konsoli ei reagoi. Jokin puuttuu.")
+
             else:
-                print("Mitä haluat käyttää?")
+                print("Et voi käyttää sitä.")
 
         # --- tutkiminen (piilojutut) ---
         elif action == "tutki":
@@ -378,7 +394,6 @@ while True:
             else:
                 print("Tutkit aluetta, mutta et löydä mitään uutta.")
 
-        # --- muistiinpanot / tekstit ---
         elif action == "lue":
             if "notes" in room:
                 print(wrap(room["notes"]))
@@ -406,35 +421,43 @@ while True:
         else:
             print("Tunneli ei tunnu ymmärtävän sitä, mitä yrität sanoa.")
 
-        # --- Drifter liikkuu vuoron lopuksi ---
+        # --- drifter liikkuu vuoron lopuksi ---
         move_drifter()
-        if drifter_encounter():
-            break
 
         # --- mahdolliset loppuratkaisut ---
 
-        # Ruosteportin pako polttimen kanssa
-        if currentRoom == "ruosteportti" and "poltin" in inventory:
+        # --- loppuratkaisun tarkistus ---
+        if ending == "ruosteportti":
             score += 50
-            print("Käytät poltinta ja leikkaat puhki Ruosteportin paksun metallin.")
-            print("Portaikko nousee ylös purevaan kylmään ilmaan.")
-            print("Astut vanhojen linjojen yläpuolelle kalpean taivaan alle.")
-            print("Olet löytänyt tien ulos.")
-            print(" SINÄ VOITIT")
-            print(f"Pisteet: {score}")
+
+            print("\n------------------------------")
+            print("Loppu: Pako ruosteportin kautta")
+            print("------------------------------\n")
+
+            print("Metalli antaa lopulta periksi.")
+            print("Portaikko johtaa ylös, pois hylätyiltä linjoilta.")
+            print("Metro jää taaksesi.")
+
+            print(GREEN + "\nSINÄ VOITIT" + RESET)
+            print(f"Pisteet: {score} / {max_score}")
+            print("------------------------------\n")
             break
 
-        # Signaaliarkiston loppu sirun ja vanhan kortin kanssa
-        if currentRoom == "signaaliarkisto" and "vanha_kortti" in inventory and "siru" in inventory:
+        elif ending == "arkisto":
             score += 50
-            print("Asetat sirun haljenneeseen konsoliin ja pyyhkäiset vanhan kortin lukijan ohi.")
-            print("Syvällä allasi lukot vapautuvat raskaalla, matalalla äänellä.")
-            print("Piilossa ollut huoltoputki avautuu ja lähtee nousemaan ylemmäs.")
-            print("Pitkän nousun jälkeen saavut tyhjälle valvomolle, joka katsoo yhä kaupungin ylle.")
-            print("Jätät metron taaksesi.")
-            print(" SINÄ VOITIT")
-            print(f"Pisteet: {score}")
+
+            print("\n------------------------------")
+            print("Loppu: Salainen ovi Arkistossa")
+            print("------------------------------\n")
+
+            print("Huoltotie vie sinut pois metron syvyyksistä.")
+            print("Drifter ei enää seuraa.")
+
+            print(GREEN + "\nSINÄ VOITIT" + RESET)
+            print(f"Pisteet: {score} / {max_score}")
+            print("------------------------------\n")
             break
+
 
 
 if __name__ == "__main__":
