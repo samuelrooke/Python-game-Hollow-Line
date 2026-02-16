@@ -2,40 +2,109 @@
 
 # Hollow Line
 
-Hollow Line on komentorivipohjainen selviytymisteemainen tekstiseikkailupeli, joka sijoittuu hylättyyn metrojärjestelmään syvälle maan alle. Pelaaja herää yksin kylmässä ja pimeässä ympäristössä ilman tietoa siitä, miten on päätynyt sinne. Tunnelit ovat täynnä ruostetta, pölyä ja hylättyjä rakenteita, ja jossain käytävien välissä jokin yhä liikkuu.
+Hollow Line on komentorivipohjainen selviytymisteemainen tekstiseikkailupeli, joka sijoittuu hylättyyn metrojärjestelmään syvälle maan alle. Pelaaja herää kylmässä ja pimeässä ympäristössä ilman tietoa siitä, miten on päätynyt sinne. Tunnelit ovat täynnä ruostetta, pölyä ja hylättyjä rakenteita. Metroverkostossa liikkuu olento nimeltä **Drifter**, joka lisää jatkuvaa uhkaa.
 
-Peliä pelataan kokonaan tekstikomennoilla. Pelaaja tutkii huoneita, lukee muistiinpanoja, kerää esineitä ja liikkuu metroalueen eri osissa etsiessään ulospääsyä. Pelimaailma on rakenteeltaan kiinteä, mutta reagoi pelaajan tekoihin, ja huolellinen tutkiminen palkitaan.
+Peli toteutetaan Pythonilla ja sitä pelataan kokonaan tekstikomennoilla.
 
-Metroverkostossa vaeltaa vihamielinen olento nimeltä **Drifter**. Se ei jahtaa pelaajaa suoraan, mutta sen läheisyys kasvattaa uhkaa ja pelkoa ajan myötä. Liiallinen altistuminen johtaa häviöön. Valo ja lämpö voivat torjua Drifterin hetkellisesti, mutta käytettävät välineet ovat rajallisia ja niiden käyttö vaatii harkintaa.
+## Pelin tavoite
 
-## Pelin tavoitteet
+Pelaajan tavoitteena on paeta metrojärjestelmästä. Tämä voidaan saavuttaa kahdella eri tavalla:
 
-Pelin päätavoitteena on löytää keino paeta metrosta. Tämä voidaan saavuttaa kahdella eri tavalla:
-- käyttämällä lämpöön perustuvaa työkalua oikeassa paikassa
-- yhdistämällä tietyt esineet ja aktivoimalla vanha konsoli syvemmällä metroalueella
+1.  **Käyttämällä lämpöön perustuvaa työkalua** oikeassa paikassa.
+2.  **Keräämällä tietyt esineet** ja aktivoimalla vanha järjestelmä syvemmällä metroalueella.
 
-Pelin aikana pelaaja kerää pisteitä tutkimisesta, esineiden löytämisestä ja selviytymisestä. Pisteet eivät vaikuta suoraan lopputulokseen, mutta ne kertovat, kuinka paljon pelimaailmaa tuli nähtyä.
+Pelaaja kerää pisteitä tutkimisesta, esineiden löytämisestä ja selviytymisestä. Pisteet mittaavat etenemistä, mutta eivät estä pelin läpäisyä.
 
 ## Ominaisuudet
 
-- Komentorivipohjainen tekstiseikkailu
-- Laaja, käsin suunniteltu pelimaailma
-- Satunnaisesti liikkuva vihollinen
-- Pelko- ja pistemekaniikka
-- Useampi mahdollinen loppuratkaisu
-- Sisällön ja pelilogiikan erottaminen JSON-rakenteella
+* Komentorivipohjainen tekstiseikkailu
+* Yli 20 käsin suunniteltua sijaintia
+* Useita kerättäviä esineitä
+* Satunnaisesti liikkuva vihollinen
+* Pelko- ja pistemekaniikka
+* Useampi mahdollinen loppuratkaisu
+* Pelimaailma tallennettu JSON-rakenteeseen
 
-## Pelaaminen
+## Vaatimukset
 
-Peli käynnistetään Pythonilla komentoriviltä. Pelaaja syöttää yksinkertaisia yhden tai kahden sanan komentoja, kuten:
-- mene itä
-- ota soihtu
-- käytä poltin
-- tutki
-- katsele
+* Python 3.x
 
+Tarkista Python-versio:
 
-Peli jatkuu, kunnes pelaaja joko pakenee metrosta tai menettää pelin.
+    python --version
+
+## Tiedostot
+
+Projektikansiossa tulee olla seuraavat tiedostot:
+
+* `game.py`: Sisältää pelilogiikan.
+* `Rooms.json`: Sisältää pelimaailman rakenteen, huoneet ja esineet.
+
+## Pelin käynnistäminen
+
+Siirry komentorivillä projektikansioon ja suorita:
+
+**Windows:**
+
+    py game.py
+
+**macOS / Linux:**
+
+    python3 game.py
+
+Jos käynnistys onnistuu, peli näyttää ohjeet ja aloitushuoneen kuvauksen.
+
+## Komennot
+
+Peli hyväksyy yhden tai kahden sanan komentoja.
+
+Esimerkkejä:
+
+    mene itä
+    mene pohjoinen
+    ota soihtu
+    pudota köysi
+    käytä soihtu
+    tutki
+    katsele
+    lue
+    mukana
+    lopeta
+
+Jos komento ei ole tunnistettu, peli ilmoittaa siitä.
+
+## Pelimekaniikka
+
+* **Drifter** liikkuu jokaisen vuoron jälkeen.
+* Jos se on viereisessä huoneessa, **pelko** kasvaa.
+* Jos se on samassa huoneessa ilman aktiivista lämpölähdettä, pelaajalla on yksi vuoro aikaa paeta tai käyttää soihtua.
+* Pelko kasvaa liiallisesta altistumisesta ja peli päättyy, jos mittari täyttyy.
+* Soihtu antaa väliaikaista suojaa.
+* Tietyt esineet mahdollistavat pelin lopullisen ratkaisemisen.
+
+## Walkthrough (lyhyt ratkaisuohje)
+
+**Yksi mahdollinen ratkaisutapa:**
+
+1.  Tutki metroverkostoa järjestelmällisesti.
+2.  Hanki soihtu **Syvä rata** -alueelta.
+3.  Hanki poltin **Huoltohallista** tutkimalla piilotettu alue.
+4.  Saavuta ruosteinen portti.
+5.  Käytä poltinta avataksesi reitin ulos.
+
+**Vaihtoehtoinen ratkaisu:**
+
+1.  Kerää siru ja vanha kortti.
+2.  Saavuta **Signaaliarkisto**.
+3.  Aktivoi järjestelmä yhdistämällä esineet.
+
+## Tekniset tiedot
+
+* Pelimaailma tallennetaan sanakirja- ja listarakenteisiin.
+* Huoneet, esineet ja poistumistiet määritellään JSON-tiedostossa.
+* Komentotulkki käsittelee yhden tai kahden sanan syötteitä.
+* Pistemäärä ja pelkomittari tallennetaan globaaliin pelitilaan.
+* Vihollisen liike perustuu satunnaisuuteen.
 
 ## Huomio
 
