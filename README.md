@@ -1,4 +1,6 @@
 <img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/7e1585a2-3eea-44ec-980c-7e0d3e7a6842" />
+#### 
+
 
 # Hollow Line
 
@@ -109,3 +111,51 @@ Jos komento ei ole tunnistettu, peli ilmoittaa siitä.
 ## Huomio
 
 Hollow Line on tunnelmallinen ja pelottava peli, jossa uhka rakentuu hitaasti. Mikään ei tapahdu nopeasti, mutta virheet kasaantuvat. Pelaajaa kannustetaan lukemaan ympäristöä tarkasti ja tekemään päätökset harkiten.
+
+### Kartta
+
+```text
+                                                                              (salainen voitto)
+                                                                                     
+                                                                 ┌───────────────┐                                                                     
+                                                                 │signaaliarkisto┼─────────┐                                                           
+                                                                 └──────▲────────┘◄────┐   │                                                           
+                                                                        │              │   │                                                           
+                                                                  ┌─────┼──────┐       │   │                                                           
+                                                                  │ kiskokuoppa│       │   │                                                           
+                                                                  └────────────┘       │   │                                                           
+                                                                                     ┌─┴───┴──────────┐ ┌──────────────────┐        
+                                                                        ▲            │tarkastuskaytava├►│Ruosteinen _portti│(voitto)
+                                                                  ┌────┼────┐        │                │ └──────────────────┘        
+                                                                  │syva_rata│        │                │                                                   
+                                                                  └─────────┘        │   ┌────────────┐                                                    
+                                                                        ▲            │   │kylmavarasto│   ┌──────┼──────┐                              
+                                                                        │            │   └─────▲──────┴──►│kaapelikanava│                              
+┌─────────────────┐    ┌─────────────┐  ┌─────────────┐           ┌─────┴────────┐   │         │          └─────────────┘                              
+│sisaantulokaytava├─►  │vanha_laituri┼► │huoltotunneli│ ────────► │tunneliristeys│◄──┘         │                                                       
+└─────────────────┘    └─────────────┘  └─────┬───────┘           └──────────────┘             │                                                       
+                                              ▼                        ▲                       │                                                       
+                                       ┌───────────┐                   │                       │                                                       
+                                       │sivukaytava│                   │                       │                                                       
+                                       └────┬──────┘                   │                       │                                                       
+                                            ▼                          │                       │                                                       
+                                       ┌────┴─────────────┐            │                       │                                                       
+                                       │sortunut_portaikko│            │                       │                                                       
+                                       └────▼─────────────┘            │                       │                                                       
+                                     ┌────────┐       ┌────────────────┤                       │                                                       
+                                     │ viemari│ ───►  │ ilmanvaihtotila│                       │                                                       
+                                     └────────┘       └───────┬────────┘                       │                                                       
+                                                              │                                │                                                       
+                                                              ▼                                │                                                       
+                                                      ┌───────────┐                            │                                                       
+                                                      │huoltohalli│ ◄──────────────────────────┘                                                       
+                                                      └─────┬─────┘                                                                                    
+                                                            │                                                                                          
+                                                      ┌─────▼─────┐                                                                                    
+                                                      │varastotila│                                                                                    
+                                                      └───────────┘
+```
+
+## Tekijät / Credits
+- Koodi ja suunnittelu: Samuel Rooke
+- Grafiikka: Generoitu tekoälyllä (Midjourney v6 / DALL-E 3)
